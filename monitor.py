@@ -9,6 +9,7 @@ class Monitor:
         self.location = Location(locationName, temperature, rainfall)
         self.timestamp = timestamp
 
+
     def getLocation(self):
         return self.location
 
@@ -27,3 +28,24 @@ class Monitor:
 
     def setTimestamp(self, newTimestamp):
         self.timestamp = newTimestamp
+
+    def getAllInfo(self):
+        list = []
+
+        #LOCATION NAME AND TIMESTAMP
+        list.append(self.location.getName())
+        list.append("Updated at: " + str(self.timestamp))
+
+        #FORMAT TEMPERATURE
+        temp = str(self.getLocation().getTemp().getCelcius())
+        if temp != "-":
+            temp += "C"
+        list.append("Temperature: " + temp)
+
+        #FORMAT RAINFALL
+        temp = str(self.getLocation().getRain().getAmount())
+        if temp != "-":
+            temp += "mm"
+        list.append("Rainfall: " + temp)
+
+        return list
