@@ -14,7 +14,6 @@ class Monitor:
         self.location = Location(locationName, temperature, rainfall)
         self.timestamp = timestamp
 
-
     def getLocation(self):
         return self.location
 

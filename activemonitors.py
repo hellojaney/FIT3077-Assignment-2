@@ -13,6 +13,7 @@ class ActiveMonitors:
         self.list = []
         self.timer = Timer()
         #instantiate timer and update all active montiors every 5 minutes
+        """
         while True:
             if self.list == []:
                 pass
@@ -21,11 +22,11 @@ class ActiveMonitors:
                 if self.timer.checkTimer(currentTime) == True:
                     for monitor in self.list:
                         monitor.createFrame()
-
-
+        """
 
     def add(self, newMonitor):
         self.list.append(newMonitor)
+
 
     def addMulti(self, monitorList):
         for monitor in monitorList:

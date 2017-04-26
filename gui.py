@@ -9,9 +9,21 @@ class GUI:
     def __init__(self, title):
         self.root = Tk()
         self.root.title(title)
+        self.weatherFrameList = []
 
     def addMonitor(self, infoList):
-        WeatherFrame(self.root).addData(infoList)
+        wFrame = WeatherFrame(self.root, infoList[0])
+        wFrame.addData(infoList)
+        self.weatherFrameList.append(wFrame)
+
+    def clearMonitor(self, id):
+        print(len(self.weatherFrameList))
+        for wFrame in self.weatherFrameList:
+            if wFrame.id == id:
+                wFrame.removeData()
+                self.weatherFrameList.remove(wFrame)
+        print (len(self.weatherFrameList))
+
 
     def startLoop(self):
         self.root.mainloop()
