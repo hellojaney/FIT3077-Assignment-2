@@ -11,10 +11,7 @@ class GUI:
         self.root.title(title)
 
     def addMonitor(self, infoList):
-        WeatherFrame(self.root, infoList)
-
-    def removeMonitor(self, List):
-
+        WeatherFrame(self.root).addData(infoList)
 
     def startLoop(self):
         self.root.mainloop()

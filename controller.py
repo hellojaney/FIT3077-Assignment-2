@@ -9,6 +9,7 @@ webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/M
 
 #create list of active monitors, for now all monitors are loaded
 active = ActiveMonitors()
+
 active.addMulti(webClient.getAllMonitors())
 
 #adding each monitor to the GUI
@@ -17,13 +18,5 @@ for monitor in active.list:
 
 gui.startLoop()
 
-#refreshing monitors: not too sure if there is a more efficient way to do this???
-while True:
-    if active.list == []:
-        break
-    else:
-        currentTime = time.localtime(time.time())
-        if active.checkTimer(active.timer, currentTime) == True:
-            for monitor in active.list:
-                gui.addMonitor(monitor.getAllInfo())
+
 

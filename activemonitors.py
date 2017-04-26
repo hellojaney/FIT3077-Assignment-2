@@ -6,11 +6,23 @@ Can decide later how we store the monitors in here
 That will depend on how we will use this list
 """
 import time
+from timer import Timer
 
 class ActiveMonitors:
     def __init__(self):
         self.list = []
-        self.timer = time.localtime(time.time())
+        self.timer = Timer()
+        #instantiate timer and update all active montiors every 5 minutes
+        while True:
+            if self.list == []:
+                pass
+            else:
+                currentTime = time.localtime(time.time())
+                if self.timer.checkTimer(currentTime) == True:
+                    for monitor in self.list:
+                        monitor.createFrame()
+
+
 
     def add(self, newMonitor):
         self.list.append(newMonitor)
@@ -18,10 +30,4 @@ class ActiveMonitors:
     def addMulti(self, monitorList):
         for monitor in monitorList:
             self.list.append(monitor)
-
-    def checkTimer(self,timer, currentTime):
-        if timer/currentTime == 5:
-            return True
-        else:
-            return False
 
