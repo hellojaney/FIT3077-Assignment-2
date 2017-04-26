@@ -1,5 +1,11 @@
 from Tkinter import *
 
+"""
+Creates a Frame() for the GUI
+Takes a list of information from getAllInfo: location, timestamp, rainfall and temp)
+Packs the frame into the GUI
+"""
+
 def closeMonitor(frame):
     frame.pack_forget()
     frame.destroy()

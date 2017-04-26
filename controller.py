@@ -1,6 +1,7 @@
 from gui import GUI
 from webclient import WebClient
 from activemonitors import ActiveMonitors
+import time
 
 #set up GUI and Web Client
 gui = GUI("Weather Monitor")
@@ -15,3 +16,14 @@ for monitor in active.list:
     gui.addMonitor(monitor.getAllInfo())
 
 gui.startLoop()
+
+#refreshing monitors: not too sure if there is a more efficient way to do this???
+while True:
+    if active.list == []:
+        break
+    else:
+        currentTime = time.localtime(time.time())
+        if active.checkTimer(active.timer, currentTime) == True:
+            for monitor in active.list:
+                gui.addMonitor(monitor.getAllInfo())
+

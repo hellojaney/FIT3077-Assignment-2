@@ -2,6 +2,11 @@ from location import Location
 from rainfall import Rainfall
 from temperature import Temperature
 
+"""
+Takes in the location name, temperature, rainfall and timestamp.
+Creates and holds a location instance.
+"""
+
 class Monitor:
     def __init__(self, locationName, tempAmount, rainAmount, timestamp):
         temperature = Temperature(tempAmount)
@@ -28,6 +33,10 @@ class Monitor:
 
     def setTimestamp(self, newTimestamp):
         self.timestamp = newTimestamp
+
+    """
+    Formats all of the data that was passed in.
+    """
 
     def getAllInfo(self):
         list = []

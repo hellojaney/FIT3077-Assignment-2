@@ -5,6 +5,5 @@ class Rainfall:
     def getAmount(self):
         return self.amount
 
-
     def setAmount(self, newAmount):
         self.amount = newAmount

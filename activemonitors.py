@@ -5,9 +5,12 @@ Can decide later how we store the monitors in here
     - Just the location name?
 That will depend on how we will use this list
 """
+import time
+
 class ActiveMonitors:
     def __init__(self):
         self.list = []
+        self.timer = time.localtime(time.time())
 
     def add(self, newMonitor):
         self.list.append(newMonitor)
@@ -15,3 +18,10 @@ class ActiveMonitors:
     def addMulti(self, monitorList):
         for monitor in monitorList:
             self.list.append(monitor)
+
+    def checkTimer(self,timer, currentTime):
+        if timer/currentTime == 5:
+            return True
+        else:
+            return False
+

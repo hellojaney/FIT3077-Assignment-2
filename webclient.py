@@ -11,7 +11,8 @@ class WebClient:
         locations = self.client.service.getLocations()
         return locations
 
-    #Mostly written by David Lei from forum example
+    # Mostly written by David Lei from forum example
+    # Need to change this function so that it does not display all location frames
     def getAllMonitors(self):
         locations = self.getLocationNames()
         collection = []
