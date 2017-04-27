@@ -5,13 +5,12 @@ Can decide later how we store the monitors in here
     - Just the location name?
 That will depend on how we will use this list
 """
-import time
-from timer import Timer
+import threading
 
 class ActiveMonitors:
     def __init__(self):
         self.list = []
-        self.timer = Timer()
+        #self.timer = Timer()
         #instantiate timer and update all active montiors every 5 minutes
         """
         while True:
@@ -23,6 +22,13 @@ class ActiveMonitors:
                     for monitor in self.list:
                         monitor.createFrame()
         """
+
+    def startRefresh(self):
+        threading.Timer(300, self.refreshMonitors).start()
+
+    def refreshMonitors(self):
+        for monitor in self.list:
+            print(monitor.getAllInfo())
 
     def add(self, newMonitor):
         self.list.append(newMonitor)
