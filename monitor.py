@@ -8,11 +8,12 @@ Creates and holds a location instance.
 """
 
 class Monitor:
-    def __init__(self, locationName, tempAmount, rainAmount, timestamp):
+    def __init__(self, locationName, tempAmount, rainAmount, timestamp, datestamp):
         temperature = Temperature(tempAmount)
         rainfall = Rainfall(rainAmount)
         self.location = Location(locationName, temperature, rainfall)
         self.timestamp = timestamp
+        self.datestamp = datestamp
 
     def getLocation(self):
         return self.location
@@ -42,7 +43,7 @@ class Monitor:
 
         #LOCATION NAME AND TIMESTAMP
         list.append(self.location.getName())
-        list.append("Updated at: " + str(self.timestamp))
+        list.append("Updated at: " + str(self.datestamp) + " " + str(self.timestamp))
 
         #FORMAT TEMPERATURE
         temp = str(self.getLocation().getTemp().getCelcius())

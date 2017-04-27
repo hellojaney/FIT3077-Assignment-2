@@ -20,6 +20,6 @@ class WebClient:
             date_time, rainfall = self.client.service.getRainfall(loc)
             date, time = date_time.split(' ')
             temp = self.client.service.getTemperature(loc)[-1]
-            collection.append(Monitor(loc, temp, rainfall, time))
+            collection.append(Monitor(loc, temp, rainfall, time, date))
         return collection
 
