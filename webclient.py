@@ -6,6 +6,7 @@ class WebClient:
     def __init__(self, url):
         self.client = Client(url)
 
+    #NOT IN USE AT THE MOMENT
     def getLocationNames(self):
         locations = []
         locations = self.client.service.getLocations()
@@ -13,8 +14,7 @@ class WebClient:
 
     # Mostly written by David Lei from forum example
     # Need to change this function so that it does not display all location frames
-    def getAllMonitors(self):
-        locations = self.getLocationNames()
+    def getMonitors(self, locations):
         collection = []
         for loc in locations:
             date_time, rainfall = self.client.service.getRainfall(loc)
@@ -22,4 +22,5 @@ class WebClient:
             temp = self.client.service.getTemperature(loc)[-1]
             collection.append(Monitor(loc, temp, rainfall, time, date))
         return collection
+
 

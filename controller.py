@@ -10,13 +10,11 @@ webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/M
 #create list of active monitors, for now all monitors are loaded
 active = ActiveMonitors()
 
-active.addMulti(webClient.getAllMonitors())
+active.addMulti(webClient.getMonitors(["Laverton"]))
+active.startRefresh()
 
 #adding each monitor to the GUI
 for monitor in active.list:
     gui.addMonitor(monitor.getAllInfo())
 
 gui.startLoop()
-
-
-

@@ -1,14 +1,14 @@
 import time
+from activemonitors import ActiveMonitors
 
 class Timer:
 
     def __init__(self):
-        # refreshing monitors: not too sure if there is a more efficient way to do this???\
-        self.time = time.localtime(time.time())
+        self.minute = 0
 
+    def startTimer(self):
+        pass
 
-    def checkTimer(self, currentTime):
-        if currentTime%self.time == 300:
-            return True
-        else:
-            return False
+    #unsure if we'll if we're going to keep the timer going
+    def resetTimer(self):
+        self.minute = 0
