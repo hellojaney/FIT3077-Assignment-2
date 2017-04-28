@@ -1,6 +1,4 @@
-from monitor import Monitor
 from suds.client import Client
-
 
 class WebClient:
     def __init__(self, url):
@@ -12,15 +10,19 @@ class WebClient:
         locations = self.client.service.getLocations()
         return locations
 
-    # Mostly written by David Lei from forum example
-    # Need to change this function so that it does not display all location frames
-    def getMonitors(self, locations):
-        collection = []
-        for loc in locations:
-            date_time, rainfall = self.client.service.getRainfall(loc)
-            date, time = date_time.split(' ')
-            temp = self.client.service.getTemperature(loc)[-1]
-            collection.append(Monitor(loc, temp, rainfall, time, date))
-        return collection
 
+    #retrieves data associated with location
+    def getWeatherData(self, location):
+        locationData = []
 
+        temperature = self.client.service.getTemperature(location)
+        locationData.append(temperature)
+
+        date_time, rainfall = self.client.service.getRainfall(location)
+        locationData.append(rainfall)
+
+        date, time = date_time.split(' ')
+        locationData.append(date)
+        locationData.append(time)
+
+        return locationData

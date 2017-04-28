@@ -1,5 +1,7 @@
 from Tkinter import *
 from weatherframe import WeatherFrame
+from activemonitors import ActiveMonitors
+
 
 """
 Adds monitor by taking in an info list (from getAllInfo) and adds weatherframe to GUI.
@@ -10,6 +12,9 @@ class GUI:
         self.root = Tk()
         self.root.title(title)
         self.weatherFrameList = []
+
+        self.active = ActiveMonitors()
+
 
     def addMonitor(self, infoList):
         wFrame = WeatherFrame(self.root, infoList[0])

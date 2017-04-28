@@ -6,20 +6,19 @@ Can decide later how we store the monitors in here
 That will depend on how we will use this list
 """
 import threading
-from webclient import WebClient
+from weatherframe import WeatherFrame
 
 class ActiveMonitors:
     def __init__(self):
         self.list = []
-
+        self.startRefresh()
 
     def startRefresh(self):
         threading.Timer(300, self.refreshMonitors).start()
 
 
     def refreshMonitors(self):
-        for monitor in self.list:
-            print(monitor.getAllInfo())
+        pass
 
 
     def add(self, newMonitor):
@@ -29,4 +28,3 @@ class ActiveMonitors:
     def addMulti(self, monitorList):
         for monitor in monitorList:
             self.list.append(monitor)
-

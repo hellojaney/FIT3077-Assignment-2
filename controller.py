@@ -1,20 +1,16 @@
 from gui import GUI
 from webclient import WebClient
-from activemonitors import ActiveMonitors
-import time
+from location import Location
+from weatherframe import WeatherFrame
+
 
 #set up GUI and Web Client
 gui = GUI("Weather Monitor")
 webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/MelbourneWeather2?wsdl')
 
-#create list of active monitors, for now all monitors are loaded
-active = ActiveMonitors()
-
-active.addMulti(webClient.getMonitors(["Laverton"]))
-active.startRefresh()
-
-#adding each monitor to the GUI
-for monitor in active.list:
-    gui.addMonitor(monitor.getAllInfo())
+#test
+loc = Location("Springvale", 10, 0.1, "now", "now")
+wFrame = WeatherFrame(gui.root, "Spring")
+wFrame.addData(loc)
 
 gui.startLoop()
