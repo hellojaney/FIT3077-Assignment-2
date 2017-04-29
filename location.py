@@ -4,7 +4,8 @@ from temperature import Temperature
 
 """
 Takes in the location name, temperature, rainfall and timestamp.
-Creates and holds a location instance.
+Creates and holds a termperature and rainfall instance.
+Keeps location name, timestamp and datestamp as an attribute.
 """
 
 class Location:
