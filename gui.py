@@ -13,12 +13,6 @@ class GUI:
         self.weatherFrameList = []
 
 
-    def addLocation(self, infoList):
-        wFrame = WeatherFrame(self.root)
-        wFrame.addData(infoList)
-        self.weatherFrameList.append(wFrame)
-
-
     def clearLocations(self):
         for wFrame in self.weatherFrameList:
             wFrame.removeData()
