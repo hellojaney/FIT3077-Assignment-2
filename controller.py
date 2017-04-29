@@ -7,24 +7,28 @@ from weatherframecollection import WeatherFrameCollection
 from timer import ControllerTimer
 
 def refreshLocations(active, wFrameCollection, webClient):
-    wFrameCollection.clearAllFrames()
     tempData = []
+    #update loop
     for location in active.activeList:
         tempData = webClient.getWeatherData(location.getName())
         location.setCelcius(tempData[0])
         location.setRainfall(tempData[1])
         location.setTimestamp(tempData[2])
         location.setDatestamp(tempData[3])
+
+    wFrameCollection.clearAllFrames()
+
+    #display loop
+    for location in active.activeList:
         wFrame = WeatherFrame(gui.root, active, location.getName())
         wFrame.addData(location)
         wFrameCollection.addFrame(wFrame)
-        print("refresh's: " + str(active.activeList))
+
 
 
 #set up GUI and Web Client
 gui = GUI("Weather Monitor")
 webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/MelbourneWeather2?wsdl')
-print webClient.getLocationNames()
 
 ######## START TEST DATA ########
 active = ActiveLocations(gui)
