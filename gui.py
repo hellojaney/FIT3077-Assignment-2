@@ -10,14 +10,11 @@ class GUI:
     def __init__(self, title):
         self.root = Tk()
         self.root.title(title)
-        self.weatherFrameList = []
-
 
     def clearLocations(self):
         for wFrame in self.weatherFrameList:
             wFrame.removeData()
             self.weatherFrameList.remove(wFrame)
-
 
     def startLoop(self):
         self.root.mainloop()

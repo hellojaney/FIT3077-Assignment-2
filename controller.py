@@ -27,8 +27,8 @@ wFrameCollection.addFrame(wFrame)
 def refresh():
     print(1)
 
-newTimer = ControllerTimer(5, refresh).start()
-
+newTimer = ControllerTimer(3, refresh)
+newTimer.start()
 
 gui.startLoop()
 
