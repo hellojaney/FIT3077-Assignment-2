@@ -42,7 +42,6 @@ class WeatherFrame:
         self.activeLocations.removeLocation(self.id)
         frame.pack_forget()
         frame.destroy()
-        print("weatherframe's: " + str(self.activeLocations.activeList))
 
 
     """

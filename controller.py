@@ -20,7 +20,7 @@ def refreshLocations(active, wFrameCollection, webClient):
 
     #display loop
     for location in active.activeList:
-        wFrame = WeatherFrame(gui.root, active, location.getName())
+        wFrame = WeatherFrame(gui.frame, active, location.getName())
         wFrame.addData(location)
         wFrameCollection.addFrame(wFrame)
 
@@ -32,7 +32,7 @@ webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/M
 
 ######## START TEST DATA ########
 
-active = ActiveLocations(gui)
+active = ActiveLocations()
 wFrameCollection =  WeatherFrameCollection()
 
 locList = webClient.getLocationNames()
@@ -42,7 +42,7 @@ for loc in locList:
     locInfo = webClient.getWeatherData(loc)
     location = Location(loc, locInfo[0], locInfo[1], locInfo[2], locInfo[3])
     active.add(location)
-    wFrame = WeatherFrame(gui.root, active, loc)
+    wFrame = WeatherFrame(gui.frame, active, loc)
     wFrame.addData(location)
     wFrameCollection.addFrame(wFrame)
 print "Loaded."

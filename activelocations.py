@@ -2,13 +2,11 @@
 A list that contains all of the displayed locations.
 The locations are stored as instances of Location
 """
-import threading
 from weatherframe import WeatherFrame
 from weatherframecollection import WeatherFrameCollection
 
 class ActiveLocations:
-    def __init__(self, gui):
-        self.gui = gui
+    def __init__(self):
         self.activeList = []
 
 
@@ -19,7 +17,8 @@ class ActiveLocations:
                 del self.activeList[index]
                 return
             index += 1
-        print("Couldn't delete location from active locations: not found.")
+
+        print("Error: Couldn't delete location from active locations, location not found.")
 
 
     def add(self, newLocation):

@@ -1,20 +1,28 @@
-from Tkinter import *
+import Tkinter as tk
 from weatherframe import WeatherFrame
 
-
-"""
-Adds monitor by taking in an info list (from getAllInfo) and adds weatherframe to GUI.
-"""
-
-class GUI:
+# code heavily reliant upon: http://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter/3092341#3092341
+# creates a custom Tkinter GUI that allows scrolling of information added to it
+class GUI(tk.Frame):
     def __init__(self, title):
-        self.root = Tk()
+        self.root = tk.Tk()
         self.root.title(title)
 
-    def clearLocations(self):
-        for wFrame in self.weatherFrameList:
-            wFrame.removeData()
-            self.weatherFrameList.remove(wFrame)
+        tk.Frame.__init__(self, self.root)
+        self.canvas = tk.Canvas(self.root, borderwidth = 0, background = "#ffffff")
+        self.frame = tk.Frame(self.canvas, background = "#ffffff")
+        self.scrollbar = tk.Scrollbar(self.root, orient = "vertical", command = self.canvas.yview)
+        self.canvas.configure(yscrollcommand = self.scrollbar.set)
+
+        self.scrollbar.pack(side = "right", fill = "y")
+        self.canvas.pack(side = "left", fill = "both", expand = True)
+        self.canvas.create_window((4, 4), window = self.frame, anchor = "nw",tags = "self.frame")
+
+        self.frame.bind("<Configure>", self.onFrameConfigure)
+
+    def onFrameConfigure(self, event):
+        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+
 
     def startLoop(self):
         self.root.mainloop()
