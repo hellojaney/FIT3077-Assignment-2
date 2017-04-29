@@ -11,4 +11,3 @@ class WeatherFrameCollection:
         for wFrame in self.wFrameList:
             wFrame.closeFrame(wFrame.frame)
         self.wFrameList = []
-

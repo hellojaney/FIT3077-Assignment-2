@@ -1,5 +1,6 @@
 from Tkinter import *
 
+
 """
 Creates a Frame() for the GUI
 Takes a list of information from getAllInfo: location, timestamp, rainfall and temp)

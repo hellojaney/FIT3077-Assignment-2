@@ -4,21 +4,19 @@ The locations are stored as instances of Location
 """
 import threading
 from weatherframe import WeatherFrame
-from timer import perpetualTimer
+from weatherframecollection import WeatherFrameCollection
 
 class ActiveLocations:
-    def __init__(self):
+    def __init__(self, gui):
+        self.gui = gui
         self.activeList = []
         #self.startRefresh()
-        self.timer = perpetualTimer(5, self.refreshLocations()).start()
+        #self.timer = perpetualTimer(5, self.refreshLocations()).start()
 
-    def refreshLocations(self):
-        """
-        gui.delete()
-        for location in self.activeList:
-            pass
-        """
-        print("hi")
+
+    def refreshLocations(self, wFrameCollection):
+        wFrameCollection.clearAllFrames()
+
 
     def add(self, newLocation):
         self.activeList.append(newLocation)

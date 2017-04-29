@@ -1,23 +1,37 @@
 from threading import Timer,Thread,Event
 
+"""
+class ControllerTimer():
 
-class perpetualTimer():
+    def __init__(self, time, action):
+      self.time = time
+      self.action = action
+      self.thread = Timer(self.time, self.handler)
 
-   def init(self,t,hFunction):
-      self.t=t
-      self.hFunction = hFunction
-      self.thread = Timer(self.t,self.handle_function)
-
-   def handle_function(self):
-      self.hFunction()
-      self.thread = Timer(self.t,self.handle_function)
+    def handler(self):
+      self.action()
+      self.thread = Timer(self.time, self.handler)
       self.thread.start()
 
-   def start(self):
+    def start(self):
       self.thread.start()
 
-   def cancel(self):
+    def cancel(self):
       self.thread.cancel()
+"""
 
-def printer():
-    print(1)
+class ControllerTimer():
+    def __init__(self, time, action):
+        self.time = time
+        self.action = action
+        self.thread = Timer(self.time, self.handler)
+
+    def handler(self):
+        self.action()
+        self.thread = Timer(self.time, self.handler).start()
+
+    def start(self):
+        self.thread.start()
+
+    def cancel(self):
+        self.thread.cancel()
