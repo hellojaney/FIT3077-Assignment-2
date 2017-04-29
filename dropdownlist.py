@@ -1,6 +1,6 @@
 from Tkinter import *
 from inactivelocations import InactiveLocations
-from activemonitors import ActiveMonitors
+from activelocations import ActiveLocations
 
 
 def addLocation(location):

@@ -10,8 +10,6 @@ Keeps location name, timestamp and datestamp as an attribute.
 
 class Location:
     def __init__(self, locationName, tempAmount, rainAmount, timestamp, datestamp):
-        temperature = Temperature(tempAmount)
-        rainfall = Rainfall(rainAmount)
         self.name = locationName
         self.temperature = Temperature(tempAmount)
         self.rainfall = Rainfall(rainAmount)
@@ -35,11 +33,14 @@ class Location:
         return self.rainfall.getAmount()
 
 
-    def setTemperature(self, newTemp):
-        self.temperature = newTemp
+    def setCelcius(self, newCelcius):
+        self.temperature.setCelcius(newCelcius)
 
-    def setRainfall(self, newRain):
-        self.rainfall = newRain
+    def setRainfall(self, newAmount):
+        self.rainfall.setAmount(newAmount)
 
     def setTimestamp(self, newTimestamp):
         self.timestamp = newTimestamp
+
+    def setDatestamp(self, newDatestamp):
+        self.datestamp = newDatestamp

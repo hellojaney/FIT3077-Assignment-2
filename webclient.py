@@ -15,7 +15,7 @@ class WebClient:
     def getWeatherData(self, location):
         locationData = []
 
-        temperature = self.client.service.getTemperature(location)
+        temperature = self.client.service.getTemperature(location)[-1]
         locationData.append(temperature)
 
         date_time, rainfall = self.client.service.getRainfall(location)

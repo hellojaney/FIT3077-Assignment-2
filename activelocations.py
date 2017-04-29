@@ -10,12 +10,16 @@ class ActiveLocations:
     def __init__(self, gui):
         self.gui = gui
         self.activeList = []
-        #self.startRefresh()
-        #self.timer = perpetualTimer(5, self.refreshLocations()).start()
 
 
-    def refreshLocations(self, wFrameCollection):
-        wFrameCollection.clearAllFrames()
+    def removeLocation(self, locationName):
+        index = 0
+        while index < len(self.activeList):
+            if self.activeList[index].getName() == locationName:
+                del self.activeList[index]
+                return
+            index += 1
+        print("Couldn't delete location from active locations: not found.")
 
 
     def add(self, newLocation):
