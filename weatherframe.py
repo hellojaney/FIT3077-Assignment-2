@@ -6,9 +6,6 @@ Takes a list of information from getAllInfo: location, timestamp, rainfall and t
 Packs the frame into the GUI
 """
 
-def closeMonitor(frame):
-    frame.pack_forget()
-    frame.destroy()
 
 class WeatherFrame:
     def __init__(self, root, id):
@@ -16,10 +13,11 @@ class WeatherFrame:
         self.frame = Frame(root)
         self.frame.pack(side=TOP, anchor=NW)
 
+
     def addData(self, location):
         #create the title and 'x' button, the first item in the list is the location name (title)
         Label(self.frame, text = location.getName(), font ="Helvetica 16 bold").grid(row=0, column=0, sticky = W)
-        self.closeButton = Button(self.frame, text="x", command=lambda: closeMonitor(self.frame)).grid(row = 0, column = 5)
+        self.closeButton = Button(self.frame, text="x", command=lambda: self.closeFrame(self.frame)).grid(row = 0, column = 5)
 
         #weather information
         Label(self.frame, text = "Updated at: " + location.getDateStamp() + ", " + location.getTimeStamp(), font ="Helvetica 14").grid(row=1, column=0, sticky = W)
@@ -29,6 +27,17 @@ class WeatherFrame:
         #blank label to create spacing
         Label(self.frame, text = " ").grid(row = 4, column = 0)
 
+
+    def closeFrame(value, frame):
+        #note: value is an automatic parameter sent through when called from the Button. We do not use it here.
+        frame.pack_forget()
+        frame.destroy()
+
+
+
+    """
+    ###### NOT IN USE ANYMORE, DECIDED TO REMOVE ALL FRAMES WHEN REFRESHING ######
     def removeData(self):
         for item in self.frame.winfo_children():
             item.destroy()
+    """

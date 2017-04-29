@@ -1,6 +1,5 @@
 from Tkinter import *
 from weatherframe import WeatherFrame
-from activemonitors import ActiveMonitors
 
 
 """
@@ -13,21 +12,17 @@ class GUI:
         self.root.title(title)
         self.weatherFrameList = []
 
-        self.active = ActiveMonitors()
-
 
     def addMonitor(self, infoList):
         wFrame = WeatherFrame(self.root, infoList[0])
         wFrame.addData(infoList)
         self.weatherFrameList.append(wFrame)
 
-    def clearMonitor(self, id):
-        print(len(self.weatherFrameList))
+
+    def clearLocations(self):
         for wFrame in self.weatherFrameList:
-            if wFrame.id == id:
-                wFrame.removeData()
-                self.weatherFrameList.remove(wFrame)
-        print (len(self.weatherFrameList))
+            wFrame.removeData()
+            self.weatherFrameList.remove(wFrame)
 
 
     def startLoop(self):
