@@ -6,10 +6,8 @@ Takes a list of information from getAllInfo: location, timestamp, rainfall and t
 Packs the frame into the GUI
 """
 
-
 class WeatherFrame:
-    def __init__(self, root, id):
-        self.id = id
+    def __init__(self, root):
         self.frame = Frame(root)
         self.frame.pack(side=TOP, anchor=NW)
 
@@ -28,10 +26,10 @@ class WeatherFrame:
         Label(self.frame, text = " ").grid(row = 4, column = 0)
 
 
-    def closeFrame(value, frame):
-        #note: value is an automatic parameter sent through when called from the Button. We do not use it here.
+    def closeFrame(self, frame):
         frame.pack_forget()
         frame.destroy()
+
 
 
 

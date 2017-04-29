@@ -13,8 +13,8 @@ class GUI:
         self.weatherFrameList = []
 
 
-    def addMonitor(self, infoList):
-        wFrame = WeatherFrame(self.root, infoList[0])
+    def addLocation(self, infoList):
+        wFrame = WeatherFrame(self.root)
         wFrame.addData(infoList)
         self.weatherFrameList.append(wFrame)
 

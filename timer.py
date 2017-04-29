@@ -1,14 +1,23 @@
-import time
-from activemonitors import ActiveMonitors
+from threading import Timer,Thread,Event
 
-class Timer:
 
-    def __init__(self):
-        self.minute = 0
+class perpetualTimer():
 
-    def startTimer(self):
-        pass
+   def init(self,t,hFunction):
+      self.t=t
+      self.hFunction = hFunction
+      self.thread = Timer(self.t,self.handle_function)
 
-    #unsure if we'll if we're going to keep the timer going
-    def resetTimer(self):
-        self.minute = 0
+   def handle_function(self):
+      self.hFunction()
+      self.thread = Timer(self.t,self.handle_function)
+      self.thread.start()
+
+   def start(self):
+      self.thread.start()
+
+   def cancel(self):
+      self.thread.cancel()
+
+def printer():
+    print(1)
