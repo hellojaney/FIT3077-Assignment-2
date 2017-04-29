@@ -31,24 +31,21 @@ gui = GUI("Weather Monitor")
 webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/MelbourneWeather2?wsdl')
 
 ######## START TEST DATA ########
+
 active = ActiveLocations(gui)
 wFrameCollection =  WeatherFrameCollection()
 
-
-loc = Location("Laverton", 10, 0.1, "now", "now")
-active.add(loc)
-
-wFrame = WeatherFrame(gui.root, active, "Laverton")
-wFrame.addData(loc)
-wFrameCollection.addFrame(wFrame)
-
-
-loc = Location("Cranbourne", 10, 0.1, "now", "now")
-active.add(loc)
-
-wFrame = WeatherFrame(gui.root, active, "Cranbourne")
-wFrame.addData(loc)
-wFrameCollection.addFrame(wFrame)
+locList = webClient.getLocationNames()
+locInfo = []
+print "Loading weather information..."
+for loc in locList:
+    locInfo = webClient.getWeatherData(loc)
+    location = Location(loc, locInfo[0], locInfo[1], locInfo[2], locInfo[3])
+    active.add(location)
+    wFrame = WeatherFrame(gui.root, active, loc)
+    wFrame.addData(location)
+    wFrameCollection.addFrame(wFrame)
+print "Loaded."
 
 ######## END TEST DATA ########
 
