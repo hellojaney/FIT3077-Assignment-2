@@ -13,7 +13,7 @@ class WeatherFrame:
         self.frame.pack(side=TOP, anchor=NW)
         self.activeLocations = activeLocations
 
-
+    # packs data into frame
     def addData(self, location):
         # blank label to create spacing
         Label(self.frame, text=" ").grid(row=0, column=0)

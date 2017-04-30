@@ -43,6 +43,7 @@ class Controller:
 
         print("Refresh Complete.")
 
+    # obtains data of selected information and displays to weather frame
     def makeLocationActive(self, locationName):
         if self.active.exists(locationName):
             print(locationName + " is already active")
@@ -62,11 +63,11 @@ class Controller:
 
         # passing list of locations to inactiveLocations and creating optionMenu
         self.allLocations.addMulti(locList)
-        optionMenu = DropDownList(self.gui.canvas, self.allLocations.getAll(), self)
+        DropDownList(self.gui.canvas, self.allLocations.getAll(), self)
 
         # initialise timer and start GUI
         # NOTE YOU MIGHT NOT NEED THESE PARAMETERS THEY'RE ALL OBJECT VARIABLES NOW
-        newTimer = ControllerTimer(5, self.refreshLocations)
+        newTimer = ControllerTimer(300, self.refreshLocations)
         newTimer.start()
 
         self.gui.startLoop()

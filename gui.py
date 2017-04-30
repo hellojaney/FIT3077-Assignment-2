@@ -1,7 +1,7 @@
 import Tkinter as tk
 
 """
-Code heavily reliant upon: http://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter/3092341#3092341
+Code derived from: http://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter/3092341#3092341
 Creates a custom Tkinter GUI that allows scrolling of information added to it
 """
 

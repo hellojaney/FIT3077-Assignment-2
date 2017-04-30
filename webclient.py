@@ -9,12 +9,10 @@ class WebClient:
     def __init__(self, url):
         self.client = Client(url)
 
-    ### NOT IN USE AT THE MOMENT ###
     def getLocationNames(self):
         locations = []
         locations = self.client.service.getLocations()
         return locations
-
 
     # retrieves data associated with location
     def getWeatherData(self, location):

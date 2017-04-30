@@ -1,7 +1,7 @@
 from threading import Timer
 
 """
-Code inspired by http://stackoverflow.com/questions/12435211/python-threading-timer-repeat-function-every-n-seconds
+Code derived from http://stackoverflow.com/questions/12435211/python-threading-timer-repeat-function-every-n-seconds
 Timer class keeps track of time for refreshing the weather locations
 """
 
@@ -11,6 +11,7 @@ class ControllerTimer():
         self.action = action
         self.thread = Timer(self.time, self.handler)
 
+    # reinstantiate timer
     def handler(self):
         self.action()
         self.thread = Timer(self.time, self.handler)
