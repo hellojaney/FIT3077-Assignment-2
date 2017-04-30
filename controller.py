@@ -34,7 +34,6 @@ def refreshLocations(active, wFrameCollection, webClient):
 
 
 # initialising GUI and Web Client
-gui = GUI("Weather Monitor")
 webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/MelbourneWeather2?wsdl')
 
 
@@ -50,7 +49,7 @@ print("Loading weather information...")
 
 # passing list of locations to inactiveLocations and creating optionMenu
 inactive.addMulti(locList)
-optionMenu = DropDownList(inactive.getAll())
+gui = GUI("Weather Monitor",inactive.getAll())
 
 
 """
