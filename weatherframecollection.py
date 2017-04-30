@@ -1,5 +1,9 @@
 from weatherframe import WeatherFrame
 
+"""
+Holds a list of all WeatherFrame instances.
+"""
+
 class WeatherFrameCollection:
     def __init__(self):
         self.wFrameList = []

@@ -1,3 +1,7 @@
+"""
+Holds a list of inactive locations (locations not displayed) for the scrollbar
+"""
+
 class InactiveLocations:
     def __init__(self):
         self.list = []

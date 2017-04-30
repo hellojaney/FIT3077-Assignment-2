@@ -1,17 +1,22 @@
 from suds.client import Client
 
+"""
+Web Client relies in Suds Jurko Client class
+Obtains location data from the web server.
+"""
+
 class WebClient:
     def __init__(self, url):
         self.client = Client(url)
 
-    #NOT IN USE AT THE MOMENT
+    ### NOT IN USE AT THE MOMENT ###
     def getLocationNames(self):
         locations = []
         locations = self.client.service.getLocations()
         return locations
 
 
-    #retrieves data associated with location
+    # retrieves data associated with location
     def getWeatherData(self, location):
         locationData = []
 

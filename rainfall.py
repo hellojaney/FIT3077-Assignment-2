@@ -1,3 +1,7 @@
+"""
+Holds Rainfall Information for a Location
+"""
+
 class Rainfall:
     def __init__(self, amount):
         self.amount = amount

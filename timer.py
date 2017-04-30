@@ -1,4 +1,9 @@
-from threading import Timer,Thread,Event
+from threading import Timer
+
+"""
+Code inspired by http://stackoverflow.com/questions/12435211/python-threading-timer-repeat-function-every-n-seconds
+Timer class keeps track of time for refreshing the weather locations
+"""
 
 class ControllerTimer():
     def __init__(self, time, action):

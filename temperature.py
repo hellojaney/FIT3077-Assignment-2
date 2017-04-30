@@ -1,3 +1,7 @@
+"""
+Holds Temperature Information for a Location
+"""
+
 class Temperature:
     def __init__(self, celcius):
         self.celcius = celcius

@@ -1,15 +1,16 @@
-"""
-A list that contains all of the displayed locations.
-The locations are stored as instances of Location
-"""
 from weatherframe import WeatherFrame
 from weatherframecollection import WeatherFrameCollection
+
+"""
+A list that contains all of the displayed locations.
+The locations are stored as instances of Location.
+"""
 
 class ActiveLocations:
     def __init__(self):
         self.activeList = []
 
-
+    # removes location from the ActiveLocations list
     def removeLocation(self, locationName):
         index = 0
         while index < len(self.activeList):
@@ -20,11 +21,11 @@ class ActiveLocations:
 
         print("Error: Couldn't delete location from active locations, location not found.")
 
-
+    # add location to ActiveLocations list
     def add(self, newLocation):
         self.activeList.append(newLocation)
 
-
+    # add multiple locations to ActiveLocations list (temp??)
     def addMulti(self, locationsList):
         for monitor in locationsList:
             self.activeList.append(monitor)

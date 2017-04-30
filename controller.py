@@ -6,8 +6,14 @@ from activelocations import ActiveLocations
 from weatherframecollection import WeatherFrameCollection
 from timer import ControllerTimer
 
+"""
+Controller manages the program functions including:
+- tracking timer to refresh location data on screen
+- creating instances of GUI, WebClient, ActiveLocations, WeatherFrameCollection
+"""
+
+# Update data and display new data on screen
 def refreshLocations(active, wFrameCollection, webClient):
-    tempData = []
     #update loop
     for location in active.activeList:
         tempData = webClient.getWeatherData(location.getName())
@@ -25,10 +31,10 @@ def refreshLocations(active, wFrameCollection, webClient):
         wFrameCollection.addFrame(wFrame)
 
 
-
 #set up GUI and Web Client
 gui = GUI("Weather Monitor")
 webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/MelbourneWeather2?wsdl')
+
 
 ######## START TEST DATA ########
 
@@ -37,7 +43,7 @@ wFrameCollection =  WeatherFrameCollection()
 
 locList = webClient.getLocationNames()
 locInfo = []
-print "Loading weather information..."
+print("Loading weather information...")
 for loc in locList:
     locInfo = webClient.getWeatherData(loc)
     location = Location(loc, locInfo[0], locInfo[1], locInfo[2], locInfo[3])
@@ -45,14 +51,13 @@ for loc in locList:
     wFrame = WeatherFrame(gui.frame, active, loc)
     wFrame.addData(location)
     wFrameCollection.addFrame(wFrame)
-print "Loaded."
+print("Loaded.")
 
 ######## END TEST DATA ########
 
 
+# initialise timer and start GUI
 newTimer = ControllerTimer(3, lambda: refreshLocations(active, wFrameCollection, webClient))
 newTimer.start()
-
 gui.startLoop()
-
 newTimer.cancel()
