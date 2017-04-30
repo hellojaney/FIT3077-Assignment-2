@@ -5,6 +5,8 @@ from weatherframe import WeatherFrame
 from activelocations import ActiveLocations
 from weatherframecollection import WeatherFrameCollection
 from timer import ControllerTimer
+from inactivelocations import InactiveLocations
+from dropdownlist import DropDownList
 
 """
 Controller manages the program functions including:
@@ -31,7 +33,7 @@ def refreshLocations(active, wFrameCollection, webClient):
         wFrameCollection.addFrame(wFrame)
 
 
-#set up GUI and Web Client
+# initialising GUI and Web Client
 gui = GUI("Weather Monitor")
 webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/MelbourneWeather2?wsdl')
 
@@ -39,11 +41,19 @@ webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/M
 ######## START TEST DATA ########
 
 active = ActiveLocations()
+inactive = InactiveLocations()
 wFrameCollection =  WeatherFrameCollection()
 
 locList = webClient.getLocationNames()
 locInfo = []
 print("Loading weather information...")
+
+# passing list of locations to inactiveLocations and creating optionMenu
+inactive.addMulti(locList)
+optionMenu = DropDownList(inactive.getAll())
+
+
+"""
 for loc in locList:
     locInfo = webClient.getWeatherData(loc)
     location = Location(loc, locInfo[0], locInfo[1], locInfo[2], locInfo[3])
@@ -51,7 +61,10 @@ for loc in locList:
     wFrame = WeatherFrame(gui.frame, active, loc)
     wFrame.addData(location)
     wFrameCollection.addFrame(wFrame)
+    """
 print("Loaded.")
+
+
 
 ######## END TEST DATA ########
 

@@ -1,29 +1,18 @@
 from Tkinter import *
-from inactivelocations import InactiveLocations
-from activelocations import ActiveLocations
 
+class DropDownList(Tk):
+    def __init__(self,inactiveLocations):
+        Tk.__init__(self)
+        self.options = inactiveLocations
+        self.initialize()
+        self.grid()
 
-def addLocation(location):
-    if location == "-- Select a Location --":
-        print("Not a valid location to delete")
-        return
-    inactiveLocations.remove(location)
-    menu = dropDownMenu['menu']
-    menu.delete(value)
+    def initialize(self):
+        self.dropVar = StringVar()
+        self.dropVar.set("--- Select a Location ---")
+        self.dropMenu = OptionMenu(self, self.dropVar, *self.options, command=self.selectOption)
+        self.dropMenu.grid(column=1, row=4)
 
-
-class DropDownList:
-    def __init__(self, root, inactiveLocations):
-        #create a list of all locations and add "select a location" at the start of the list
-        list = inactiveLocations.getAll()
-        list.insert(0, "-- Select a Location --")
-
-        #create stringvar and set the "-- Select a Location --" as the default of the menu
-        self.var = StringVar(root)
-        self.var.set(list[0])
-        self.menu = OptionMenu(root, self.var, *list, command = addLocation)
-        self.menu.grid(row = 0, column = 0)
-
-
-
-
+    def selectOption(self,value):
+        print(value)
+        # remove from inactive locations and display
