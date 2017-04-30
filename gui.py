@@ -8,9 +8,10 @@ creates a custom Tkinter GUI that allows scrolling of information added to it
 """
 
 class GUI(tk.Frame):
-    def __init__(self, title, inactive):
+    def __init__(self, title):
         # frame configuration
         self.root = tk.Tk()
+        self.root.minsize(width = 300, height = 600)
         self.root.title(title)
         tk.Frame.__init__(self, self.root)
         self.canvas = tk.Canvas(self.root, borderwidth = 0, background = "#ffffff")
@@ -24,8 +25,6 @@ class GUI(tk.Frame):
         self.canvas.create_window((4, 4), window = self.frame, anchor = "nw",tags = "self.frame")
 
         self.frame.bind("<Configure>", self.onFrameConfigure)
-
-        self.optionMenu = DropDownList(self.root,inactive)
 
 
     def onFrameConfigure(self, event):
