@@ -28,8 +28,6 @@ class WeatherFrame:
         Label(self.frame, text= "Rainfall: " + str(location.getRainfall()) + "mm", font="Helvetica 14").grid(row=4, column=0, sticky=W)
 
 
-
-
     # only removes the frame from the GUI, doesn't delete the location from active locations
     # this is called when the locations are refreshed
     def closeFrame(self, frame):
@@ -43,11 +41,3 @@ class WeatherFrame:
         self.activeLocations.removeLocation(self.id)
         frame.pack_forget()
         frame.destroy()
-
-
-    """
-    ###### NOT IN USE ANYMORE, DECIDED TO REMOVE ALL FRAMES WHEN REFRESHING ######
-    def removeData(self):
-        for item in self.frame.winfo_children():
-            item.destroy()
-    """

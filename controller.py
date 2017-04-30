@@ -4,7 +4,7 @@ from location import Location
 from weatherframe import WeatherFrame
 from activelocations import ActiveLocations
 from weatherframecollection import WeatherFrameCollection
-from timer import ControllerTimer
+from controllertimer import ControllerTimer
 from locationlist import LocationList
 from dropdownlist import DropDownList
 
@@ -19,15 +19,16 @@ class Controller:
         self.webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/MelbourneWeather2?wsdl')
 
         self.active = ActiveLocations()
-        self.inactive = LocationList()
+        self.allLocations = LocationList()
         self.wFrameCollection = WeatherFrameCollection()
 
     # Update data and display new data on screen
     def refreshLocations(self):
+        print("Refreshing Weather Data...")
         #update loop
         for location in self.active.activeList:
             tempData = self.webClient.getWeatherData(location.getName())
-            location.setCelcius(tempData[0])
+            location.setTemperature(tempData[0])
             location.setRainfall(tempData[1])
             location.setTimestamp(tempData[2])
             location.setDatestamp(tempData[3])
@@ -39,6 +40,8 @@ class Controller:
             wFrame = WeatherFrame(self.gui.frame, self.active, location.getName())
             wFrame.addData(location)
             self.wFrameCollection.addFrame(wFrame)
+
+        print("Refresh Complete.")
 
     def makeLocationActive(self, locationName):
         if self.active.exists(locationName):
@@ -58,8 +61,8 @@ class Controller:
         locList = self.webClient.getLocationNames()
 
         # passing list of locations to inactiveLocations and creating optionMenu
-        self.inactive.addMulti(locList)
-        optionMenu = DropDownList(self.gui.canvas, self.inactive.getAll(), self)
+        self.allLocations.addMulti(locList)
+        optionMenu = DropDownList(self.gui.canvas, self.allLocations.getAll(), self)
 
         # initialise timer and start GUI
         # NOTE YOU MIGHT NOT NEED THESE PARAMETERS THEY'RE ALL OBJECT VARIABLES NOW

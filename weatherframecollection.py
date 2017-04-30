@@ -1,5 +1,3 @@
-from weatherframe import WeatherFrame
-
 """
 Holds a list of all WeatherFrame instances.
 """

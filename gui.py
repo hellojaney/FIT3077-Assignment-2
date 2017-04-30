@@ -1,19 +1,16 @@
 import Tkinter as tk
-from weatherframe import WeatherFrame
-from dropdownlist import DropDownList
 
 """
-code heavily reliant upon: http://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter/3092341#3092341
-creates a custom Tkinter GUI that allows scrolling of information added to it
+Code heavily reliant upon: http://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter/3092341#3092341
+Creates a custom Tkinter GUI that allows scrolling of information added to it
 """
 
-class GUI(tk.Frame):
+class GUI:
     def __init__(self, title):
         # frame configuration
         self.root = tk.Tk()
         self.root.minsize(width = 300, height = 600)
         self.root.title(title)
-        tk.Frame.__init__(self, self.root)
         self.canvas = tk.Canvas(self.root, borderwidth = 0, background = "#ffffff")
         self.frame = tk.Frame(self.canvas, background = "#ffffff")
 

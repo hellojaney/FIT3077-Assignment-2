@@ -1,4 +1,3 @@
-
 from rainfall import Rainfall
 from temperature import Temperature
 
@@ -22,23 +21,23 @@ class Location:
     def getName(self):
         return self.name
 
+    def getTemperature(self):
+        return self.temperature.getTemperature()
+
+    def getRainfall(self):
+        return self.rainfall.getAmount()
+
     def getTimeStamp(self):
         return self.timestamp
 
     def getDateStamp(self):
         return self.datestamp
 
-    def getTemperature(self):
-        return self.temperature.getCelcius()
-
-    def getRainfall(self):
-        return self.rainfall.getAmount()
-
     """
     Setters
     """
-    def setCelcius(self, newCelcius):
-        self.temperature.setCelcius(newCelcius)
+    def setTemperature(self, newTemperature):
+        self.temperature.setTemperature(newTemperature)
 
     def setRainfall(self, newAmount):
         self.rainfall.setAmount(newAmount)

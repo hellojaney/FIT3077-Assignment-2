@@ -1,6 +1,3 @@
-from weatherframe import WeatherFrame
-from weatherframecollection import WeatherFrameCollection
-
 """
 A list that contains all of the displayed locations.
 The locations are stored as instances of Location.

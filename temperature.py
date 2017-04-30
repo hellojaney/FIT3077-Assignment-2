@@ -4,12 +4,12 @@ Holds Temperature Information for a Location
 
 class Temperature:
     def __init__(self, celcius):
-        self.celcius = celcius
+        self.temperature = celcius
 
 
-    def getCelcius(self):
-        return self.celcius
+    def getTemperature(self):
+        return self.temperature
 
 
-    def setCelcius(self, newCelcius):
-        self.celcius = newCelcius
+    def setTemperature(self, newTemperature):
+        self.temperature = newTemperature
