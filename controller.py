@@ -7,6 +7,7 @@ from weatherframecollection import WeatherFrameCollection
 from controllertimer import ControllerTimer
 from locationlist import LocationList
 from dropdownlist import DropDownList
+from viewselection import ViewSelection
 
 """
 Controller manages the program functions including:
@@ -21,6 +22,7 @@ class Controller:
         self.active = ActiveLocations()
         self.allLocations = LocationList()
         self.wFrameCollection = WeatherFrameCollection()
+        self.viewOption = None
 
     # Update data and display new data on screen
     def refreshLocations(self):
@@ -38,23 +40,34 @@ class Controller:
         #display loop
         for location in self.active.activeList:
             wFrame = WeatherFrame(self.gui.frame, self.active, location.getName())
-            wFrame.addData(location)
+            wFrame.addData(location, self.viewOption)
             self.wFrameCollection.addFrame(wFrame)
 
         print("Refresh Complete.")
 
     # obtains data of selected information and displays to weather frame
     def makeLocationActive(self, locationName):
+        if self.viewOption == None:
+            print("Select Viewing Option")
+            return
+
         if self.active.exists(locationName):
             print(locationName + " is already active")
             return
+
         locInfo = self.webClient.getWeatherData(locationName)
         location = Location(locationName, locInfo[0], locInfo[1], locInfo[2], locInfo[3])
         self.active.add(location)
 
         wFrame = WeatherFrame(self.gui.frame, self.active, locationName)
-        wFrame.addData(location)
+        wFrame.addData(location, self.viewOption)
         self.wFrameCollection.addFrame(wFrame)
+
+
+    # sets the viewOption
+    def setViewingOption(self, option):
+        self.viewOption = option
+        self.refreshLocations()
 
 
     def begin(self):
@@ -64,6 +77,9 @@ class Controller:
         # passing list of locations to inactiveLocations and creating optionMenu
         self.allLocations.addMulti(locList)
         DropDownList(self.gui.canvas, self.allLocations.getAll(), self)
+
+        # initialise view selection: location, rainfall or both
+        ViewSelection(self.gui.canvas, self)
 
         # initialise timer and start GUI
         # NOTE YOU MIGHT NOT NEED THESE PARAMETERS THEY'RE ALL OBJECT VARIABLES NOW

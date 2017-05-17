@@ -8,7 +8,7 @@ class DropDownList():
         self.dropVar = tk.StringVar()
         self.dropVar.set("--- Select a Location ---")
         self.dropMenu = tk.OptionMenu(guiFrame, self.dropVar, *self.inactiveList, command=self.selectOption)
-        self.dropMenu.grid(row = 0, column = 0)
+        self.dropMenu.grid(row = 0, column = 1)
 
     def selectOption(self, option):
         if option == "--- Select a Location ---":
