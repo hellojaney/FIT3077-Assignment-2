@@ -67,5 +67,5 @@ class WeatherFrame:
             #test data to see if it goes through, change to actual data later
             self.windowOpen = True
             print "Rain and temperature graph opened"
-            graphWindow = GraphWindow(self.id, [1,2,3,4,5,6,7], [5,5,5,5,5,5,5])
+            graphWindow = GraphWindow(self.id, [1, 2, 3, 4, 5], [11, 5, 3, 9, 2], [5, 8, 1, 1, 10])
             self.windowOpen = False

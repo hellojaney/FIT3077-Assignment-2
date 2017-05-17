@@ -29,8 +29,8 @@ class Controller:
     """
     Update location data and display on the screen through the Weather Frame.
     """
-    def refreshLocations(self):
-        print("Refreshing Weather Data...")
+    def updateLocationInfo(self):
+        print("Updating Weather Data...")
 
         # obtain new data through web client
         for location in self.active.activeList:
@@ -40,15 +40,18 @@ class Controller:
             location.setTimestamp(tempData[2])
             location.setDatestamp(tempData[3])
 
-        self.wFrameCollection.clearAllFrames()
+        print("Update Complete.")
 
+        self.refreshWeatherFrames()
+
+
+    def refreshWeatherFrames(self):
+        self.wFrameCollection.clearAllFrames()
         # display new data to the weather frame
         for location in self.active.activeList:
             wFrame = WeatherFrame(self.gui.frame, self.active, location.getName())
             wFrame.addData(location, self.viewOption)
             self.wFrameCollection.addFrame(wFrame)
-
-        print("Refresh Complete.")
 
 
     """
@@ -80,7 +83,7 @@ class Controller:
     """
     def setViewingOption(self, option):
         self.viewOption = option
-        self.refreshLocations()
+        self.refreshWeatherFrames()
 
 
     """
@@ -98,7 +101,7 @@ class Controller:
         ViewSelection(self.gui.canvas, self)
 
         # initialise timer and start GUI
-        newTimer = ControllerTimer(300, self.refreshLocations)
+        newTimer = ControllerTimer(300, self.updateLocationInfo)
         newTimer.start()
         self.gui.startLoop()
         newTimer.cancel()
