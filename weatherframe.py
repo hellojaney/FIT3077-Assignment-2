@@ -1,4 +1,5 @@
 from Tkinter import *
+from graphwindow import GraphWindow
 
 """
 Creates a Frame() for the GUI
@@ -12,6 +13,7 @@ class WeatherFrame:
         self.frame = Frame(root)
         self.frame.pack(side=TOP, anchor=NW)
         self.activeLocations = activeLocations
+        self.windowOpen = False
 
     # packs data into frame
     def addData(self, location, viewOption):
@@ -38,9 +40,7 @@ class WeatherFrame:
             Label(self.frame, text="Rainfall: " + str(location.getRainfall()) + "mm", font="Helvetica 14").grid(row=4,
                                                                                                                 column=0,
                                                                                                                 sticky=W)
-
-        # weather information
-
+        Button(self.frame, text="Show Graph", command = self.createGraph).grid(row = 5, column = 0, sticky = W)
 
 
     # only removes the frame from the GUI, doesn't delete the location from active locations
@@ -56,3 +56,16 @@ class WeatherFrame:
         self.activeLocations.removeLocation(self.id)
         frame.pack_forget()
         frame.destroy()
+
+    """
+    opens a new window to display the temperature/rainfall graph
+    """
+    def createGraph(self):
+        if self.windowOpen is True:
+            print "Graph is already open"
+        else:
+            #test data to see if it goes through, change to actual data later
+            self.windowOpen = True
+            print "Rain and temperature graph opened"
+            graphWindow = GraphWindow(self.id, [1,2,3,4,5,6,7], [5,5,5,5,5,5,5])
+            self.windowOpen = False

@@ -12,6 +12,8 @@ class Location:
         self.name = locationName
         self.temperature = Temperature(tempAmount)
         self.rainfall = Rainfall(rainAmount)
+        self.temperatureHistory = {}
+        self.rainfallHistory = {}
         self.timestamp = timestamp
         self.datestamp = datestamp
 
@@ -32,6 +34,13 @@ class Location:
 
     def getDateStamp(self):
         return self.datestamp
+
+    def getTemperatureHistory(self):
+        return self.temperatureHistory
+
+    def getRainfallHistory(self):
+        return self.rainfallHistory
+
 
     """
     Setters
