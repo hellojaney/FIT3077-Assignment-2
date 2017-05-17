@@ -2,19 +2,19 @@ import Tkinter as tk
 
 """
 Code derived from: http://stackoverflow.com/questions/3085696/adding-a-scrollbar-to-a-group-of-widgets-in-tkinter/3092341#3092341
-Creates a custom Tkinter GUI that allows scrolling of information added to it
+Creates a custom Tkinter GUI that allows scrolling of information added to it.
 """
 
 class GUI:
     def __init__(self, title):
-        # frame configuration
+        # Configure Frame
         self.root = tk.Tk()
         self.root.minsize(width = 300, height = 600)
         self.root.title(title)
         self.canvas = tk.Canvas(self.root, borderwidth = 0, background = "#ffffff")
         self.frame = tk.Frame(self.canvas, background = "#ffffff")
 
-        # scrollbar configuration
+        # Configure Scrollbar
         self.scrollbar = tk.Scrollbar(self.root, orient = "vertical", command = self.canvas.yview)
         self.canvas.configure(yscrollcommand = self.scrollbar.set)
         self.scrollbar.pack(side = "right", fill = "y")
@@ -27,6 +27,8 @@ class GUI:
     def onFrameConfigure(self, event):
         self.canvas.configure(scrollregion = self.canvas.bbox("all"))
 
-    # gui startLoop
+    """
+    Initialising the GUI start loop
+    """
     def startLoop(self):
         self.root.mainloop()

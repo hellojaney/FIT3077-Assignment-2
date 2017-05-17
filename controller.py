@@ -14,6 +14,7 @@ Controller manages the program functions including:
 - tracking timer to refresh location data on screen
 - creating instances of GUI, WebClient, ActiveLocations, WeatherFrameCollection
 """
+
 class Controller:
     def __init__(self):
         self.gui = GUI("Weather Monitor")
@@ -24,10 +25,14 @@ class Controller:
         self.wFrameCollection = WeatherFrameCollection()
         self.viewOption = None
 
-    # Update data and display new data on screen
+
+    """
+    Update location data and display on the screen through the Weather Frame.
+    """
     def refreshLocations(self):
         print("Refreshing Weather Data...")
-        #update loop
+
+        # obtain new data through web client
         for location in self.active.activeList:
             tempData = self.webClient.getWeatherData(location.getName())
             location.setTemperature(tempData[0])
@@ -37,7 +42,7 @@ class Controller:
 
         self.wFrameCollection.clearAllFrames()
 
-        #display loop
+        # display new data to the weather frame
         for location in self.active.activeList:
             wFrame = WeatherFrame(self.gui.frame, self.active, location.getName())
             wFrame.addData(location, self.viewOption)
@@ -45,36 +50,47 @@ class Controller:
 
         print("Refresh Complete.")
 
-    # obtains data of selected information and displays to weather frame
+
+    """
+    Obtains data of selected location information and displays to the Weather Frame.
+    """
     def makeLocationActive(self, locationName):
         if self.viewOption == None:
             print("Select Viewing Option")
             return
 
+        # check if location exists
         if self.active.exists(locationName):
             print(locationName + " is already active")
             return
 
+        # retrieve data from web client
         locInfo = self.webClient.getWeatherData(locationName)
         location = Location(locationName, locInfo[0], locInfo[1], locInfo[2], locInfo[3])
         self.active.add(location)
 
+        # display data to weather frame
         wFrame = WeatherFrame(self.gui.frame, self.active, locationName)
         wFrame.addData(location, self.viewOption)
         self.wFrameCollection.addFrame(wFrame)
 
 
-    # sets the viewOption
+    """
+    Sets the view option to either: temperature, rainfall or both.
+    """
     def setViewingOption(self, option):
         self.viewOption = option
         self.refreshLocations()
 
 
+    """
+    Initialise Program
+    """
     def begin(self):
         # initialising GUI and Web Client
         locList = self.webClient.getLocationNames()
 
-        # passing list of locations to inactiveLocations and creating optionMenu
+        # passing list of locations and creating optionMenu
         self.allLocations.addMulti(locList)
         DropDownList(self.gui.canvas, self.allLocations.getAll(), self)
 
@@ -82,12 +98,12 @@ class Controller:
         ViewSelection(self.gui.canvas, self)
 
         # initialise timer and start GUI
-        # NOTE YOU MIGHT NOT NEED THESE PARAMETERS THEY'RE ALL OBJECT VARIABLES NOW
         newTimer = ControllerTimer(300, self.refreshLocations)
         newTimer.start()
-
         self.gui.startLoop()
         newTimer.cancel()
+
+
 
 cont = Controller()
 cont.begin()

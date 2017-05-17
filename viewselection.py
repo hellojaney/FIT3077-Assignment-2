@@ -1,5 +1,9 @@
 import Tkinter as tk
 
+"""
+ViewSelection class holds the options to either view Temperature, Rainfall or Both.
+"""
+
 class ViewSelection():
     def __init__(self, guiFrame, caller):
         self.caller = caller
@@ -10,6 +14,10 @@ class ViewSelection():
         self.dropMenu = tk.OptionMenu(guiFrame, self.dropVar, *self.viewingOptions, command=self.selectOption)
         self.dropMenu.grid(row = 0, column = 0)
 
+
+    """
+    Sets the viewing option when an option is selected.
+    """
     def selectOption(self, option):
         if option == "--- Select Viewing Option ---":
             return

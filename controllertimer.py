@@ -11,14 +11,25 @@ class ControllerTimer():
         self.action = action
         self.thread = Timer(self.time, self.handler)
 
-    # reinstantiate timer
+
+    """
+    Reinstantiate Timer
+    """
     def handler(self):
         self.action()
         self.thread = Timer(self.time, self.handler)
         self.thread.start()
 
+
+    """
+    Start Timer
+    """
     def start(self):
         self.thread.start()
 
+
+    """
+    Cancel Timer (when program is quit)
+    """
     def cancel(self):
         self.thread.cancel()

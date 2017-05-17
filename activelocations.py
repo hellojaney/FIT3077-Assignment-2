@@ -1,13 +1,16 @@
 """
 A list that contains all of the displayed locations.
-The locations are stored as instances of Location.
+The locations are stored as instances of Location class.
 """
 
 class ActiveLocations:
     def __init__(self):
         self.activeList = []
 
-    # removes location from the ActiveLocations list
+
+    """
+    Remove location from ActiveLocations list given a location name.
+    """
     def removeLocation(self, locationName):
         index = 0
         while index < len(self.activeList):
@@ -17,17 +20,19 @@ class ActiveLocations:
             index += 1
         print("Error: Couldn't delete location from active locations, location not found.")
 
-    # add location to ActiveLocations list
+
+    """
+    Add a location to ActiveLocations list given a new location.
+    """
     def add(self, newLocation):
         self.activeList.append(newLocation)
 
+
+    """
+    Check if the location is already active given a location name.
+    """
     def exists(self, newLocation):
         for location in self.activeList:
             if location.getName() == newLocation:
                 return True
         return False
-
-    # add multiple locations to ActiveLocations list (temp??)
-    def addMulti(self, locationsList):
-        for monitor in locationsList:
-            self.activeList.append(monitor)
