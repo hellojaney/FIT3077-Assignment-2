@@ -61,11 +61,8 @@ class WeatherFrame:
     opens a new window to display the temperature/rainfall graph
     """
     def createGraph(self):
-        if self.windowOpen is True:
-            print "Graph is already open"
-        else:
-            #test data to see if it goes through, change to actual data later
-            self.windowOpen = True
-            print "Rain and temperature graph opened"
-            graphWindow = GraphWindow(self.id, [1, 2, 3, 4, 5], [11, 5, 3, 9, 2], [5, 8, 1, 1, 10])
-            self.windowOpen = False
+        #test data to see if it goes through, change to actual data later
+        self.windowOpen = True
+        print "Rain and temperature graph opened"
+        graphWindow = GraphWindow(self.id, [1, 2, 3, 4, 5], [11, 5, 3, 9, 2], [5, 8, 1, 1, 10])
+        self.windowOpen = False

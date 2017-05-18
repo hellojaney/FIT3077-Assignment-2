@@ -1,5 +1,5 @@
 from gui import GUI
-from webclient import WebClient
+from melbclient import MelbClient
 from location import Location
 from weatherframe import WeatherFrame
 from activelocations import ActiveLocations
@@ -18,8 +18,7 @@ Controller manages the program functions including:
 class Controller:
     def __init__(self):
         self.gui = GUI("Weather Monitor")
-        self.webClient = WebClient('http://viper.infotech.monash.edu.au:8180/axis2/services/MelbourneWeather2?wsdl')
-
+        self.melbWeather2 = MelbClient()
         self.active = ActiveLocations()
         self.allLocations = LocationList()
         self.wFrameCollection = WeatherFrameCollection()
@@ -34,7 +33,7 @@ class Controller:
 
         # obtain new data through web client
         for location in self.active.activeList:
-            tempData = self.webClient.getWeatherData(location.getName())
+            tempData = self.melbWeather2.getWeatherData(location.getName())
             #update timestamp first to correct values in temperatureHistory and rainfallHistory
             location.setTimestamp(tempData[2])
             location.setDatestamp(tempData[3])
@@ -69,7 +68,7 @@ class Controller:
             return
 
         # retrieve data from web client
-        locInfo = self.webClient.getWeatherData(locationName)
+        locInfo = self.melbWeather2.getWeatherData(locationName)
         location = Location(locationName, locInfo[0], locInfo[1], locInfo[2], locInfo[3])
         self.active.add(location)
 
@@ -92,7 +91,7 @@ class Controller:
     """
     def begin(self):
         # initialising GUI and Web Client
-        locList = self.webClient.getLocationNames()
+        locList = self.melbWeather2.getLocationNames()
 
         # passing list of locations and creating optionMenu
         self.allLocations.addMulti(locList)
