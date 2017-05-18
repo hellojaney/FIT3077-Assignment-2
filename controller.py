@@ -35,10 +35,11 @@ class Controller:
         # obtain new data through web client
         for location in self.active.activeList:
             tempData = self.webClient.getWeatherData(location.getName())
-            location.setTemperature(tempData[0])
-            location.setRainfall(tempData[1])
+            #update timestamp first to correct values in temperatureHistory and rainfallHistory
             location.setTimestamp(tempData[2])
             location.setDatestamp(tempData[3])
+            location.setTemperature(tempData[0])
+            location.setRainfall(tempData[1])
 
         print("Update Complete.")
 
@@ -105,8 +106,6 @@ class Controller:
         newTimer.start()
         self.gui.startLoop()
         newTimer.cancel()
-
-
 
 cont = Controller()
 cont.begin()

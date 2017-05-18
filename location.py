@@ -12,8 +12,8 @@ class Location:
         self.name = locationName
         self.temperature = Temperature(tempAmount)
         self.rainfall = Rainfall(rainAmount)
-        self.temperatureHistory = {}
-        self.rainfallHistory = {}
+        self.temperatureHistory = {timestamp:tempAmount}
+        self.rainfallHistory = {timestamp:rainAmount}
         self.timestamp = timestamp
         self.datestamp = datestamp
 
@@ -47,9 +47,11 @@ class Location:
     """
     def setTemperature(self, newTemperature):
         self.temperature.setTemperature(newTemperature)
+        self.temperatureHistory.update({self.timestamp : newTemperature})
 
     def setRainfall(self, newAmount):
         self.rainfall.setAmount(newAmount)
+        self.rainfallHistory.update({self.timestamp : newAmount})
 
     def setTimestamp(self, newTimestamp):
         self.timestamp = newTimestamp
