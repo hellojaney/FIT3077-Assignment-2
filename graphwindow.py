@@ -52,33 +52,44 @@ class GraphWindow:
         self.showCanvas()
         self.openGraph()
 
-
+    """
+    Adds the legend, x axis and y axis to the plot
+    Restricts the line colours to orange and bluegr
+    """
     def formatAxis(self):
-        self.axis.set_color_cycle(['red', 'blue'])
-        self.axis.legend(['Temperature', 'Rainfall'], loc='upper left')
+        self.axis.set_color_cycle(['blue', 'orange'])
+        self.axis.legend(['Rainfall', 'Temperature'], loc='upper left')
         self.axis.set_xlabel('t')
         self.axis.set_ylabel('C / mm')
 
 
+    """
+    Packs the plot to the window (graphRoot)
+    """
     def showCanvas(self):
         self.canvas.show()
         self.canvas.get_tk_widget().pack(side = BOTTOM, fill = BOTH, expand = True)
 
 
+    """
+    Starts the timer that calls updateData, then starts the mainloop
+    When the window (graphRoot) is closed, the timer is stopped
+    """
     def openGraph(self):
         self.timer.start()
         self.graphRoot.mainloop()
         self.timer.cancel()
 
-
+    """
+    Retrieves new data from the TimeLapse Web Client and updates the temperature and rainfall data lists
+    """
     def updateData(self):
         newData = self.client.getWeatherTimeLapse(self.locationName)
-        # convert Kelvin to Celsius, then add to temperature data
 
+        # convert Kelvin to Celsius, then add to temperature data
         temperature = float(newData[0])
         temperature -= 273.15
         self.tempData.append(temperature)
-
 
         # convert centimeters to millimeters asnd add to rainfall data
         rainfall = float(newData[1])
@@ -93,15 +104,18 @@ class GraphWindow:
         self.clearGraph()
         self.plotLines()
 
-
+    """
+    Removes both temperature and rainfall lines from the graph
+    """
     def clearGraph(self):
-        # remove temperature and rainfall lines
         l = self.tempLine.pop(0)
         l.remove()
         l = self.rainLine.pop(0)
         l.remove()
 
-
+    """
+    Adds temperature and rainfall lines to the graph
+    """
     def plotLines(self):
         # update lines with new data
         self.tempLine = self.axis.plot(self.timeData, self.tempData)
