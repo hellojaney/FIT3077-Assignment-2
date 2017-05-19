@@ -10,8 +10,7 @@ class WebClient:
     Retrieves a list of all location names.
     """
     def getLocationNames(self):
-        locations = self.client.service.getLocations()
-        return locations
+        pass
 
     """
     Retrieves data associated to a given location from MelbourneWeatherData.

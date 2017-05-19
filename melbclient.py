@@ -6,6 +6,10 @@ class MelbClient(WebClient):
         WebClient.__init__(self)
         self.client = Client('http://viper.infotech.monash.edu.au:8180/axis2/services/MelbourneWeather2?wsdl')
 
+    def getLocationNames(self):
+        locations = self.client.service.getLocations()
+        return locations
+
     """
     Retrieves data associated to a given location.
     """
