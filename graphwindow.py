@@ -1,4 +1,4 @@
-from timelapseclient import TimeLapseClient
+from clients import TimeLapseClient
 
 from Tkinter import *
 from datetime import datetime
@@ -62,7 +62,7 @@ class GraphWindow:
         self.setupLegend()
 
         self.axis.set_xlabel('Time (date hour:minute)')
-        self.axis.set_ylabel('C / mm')
+        self.axis.set_ylabel('Temperature / Rainfall (C / mm)')
 
 
     def setupLegend(self):
@@ -103,7 +103,7 @@ class GraphWindow:
     Retrieves new data from the TimeLapse Web Client and updates the temperature and rainfall data lists
     """
     def updateData(self):
-        newData = self.client.getWeatherTimeLapse(self.locationName)
+        newData = self.client.getWeatherData(self.locationName)
         print newData
         # convert Kelvin to Celsius, then add to temperature data
         temperature = float(newData[0])
