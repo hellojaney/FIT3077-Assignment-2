@@ -1,5 +1,4 @@
 from timelapseclient import TimeLapseClient
-from controllertimer import ControllerTimer
 
 from Tkinter import *
 from datetime import datetime
@@ -25,7 +24,7 @@ class GraphWindow:
 
         self.locationName = locationName
         self.client = TimeLapseClient()
-        self.timer = ControllerTimer(2, self.updateData)
+        self.job = None
 
         # create data lists
         self.rainData = []
@@ -57,11 +56,19 @@ class GraphWindow:
     Restricts the line colours to orange and bluegr
     """
     def formatAxis(self):
-        self.axis.set_color_cycle(['blue', 'orange'])
-        self.axis.legend(['Rainfall', 'Temperature'], loc='upper left')
-        self.axis.set_xlabel('t')
+        #self.axis.set_color_cycle(['blue', 'orange'])
+        self.axis.set_prop_cycle('color', ['red', 'blue'])
+        self.axis.legend(['Temperature', 'Rainfall'], loc='upper left')
+        self.setupLegend()
+
+        self.axis.set_xlabel('Time (date hour:minute)')
         self.axis.set_ylabel('C / mm')
 
+
+    def setupLegend(self):
+        legend = self.axis.get_legend()
+        legend.legendHandles[0].set_color('red')
+        legend.legendHandles[1].set_color('blue')
 
     """
     Packs the plot to the window (graphRoot)
@@ -76,16 +83,28 @@ class GraphWindow:
     When the window (graphRoot) is closed, the timer is stopped
     """
     def openGraph(self):
-        self.timer.start()
+        #self.timer.start()
+        self.job = self.graphRoot.after(2000, self.updateData)
+        self.graphRoot.protocol("WM_DELETE_WINDOW", self.cancelUpdates)
         self.graphRoot.mainloop()
-        self.timer.cancel()
+        #self.timer.cancel()
+
+    """
+    Stops the update function when the user clicks the exit button on the window.
+    """
+    def cancelUpdates(self):
+        if self.job is not None:
+            self.graphRoot.after_cancel(self.job)
+            self.job = None
+            self.graphRoot.destroy()
+
 
     """
     Retrieves new data from the TimeLapse Web Client and updates the temperature and rainfall data lists
     """
     def updateData(self):
         newData = self.client.getWeatherTimeLapse(self.locationName)
-
+        print newData
         # convert Kelvin to Celsius, then add to temperature data
         temperature = float(newData[0])
         temperature -= 273.15
@@ -103,6 +122,7 @@ class GraphWindow:
 
         self.clearGraph()
         self.plotLines()
+        self.job = self.graphRoot.after(2000, self.updateData)
 
     """
     Removes both temperature and rainfall lines from the graph
