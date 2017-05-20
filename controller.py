@@ -1,9 +1,9 @@
 from gui import GUI
-from melbclient import MelbClient
+from clients import MelbClient
 from location import Location
-from weatherframe import WeatherFrame
+from monitor import Monitor
 from activelocations import ActiveLocations
-from weatherframecollection import WeatherFrameCollection
+from monitorcollection import MonitorCollection
 from controllertimer import ControllerTimer
 from locationlist import LocationList
 from dropdownlist import DropDownList
@@ -21,7 +21,7 @@ class Controller:
         self.melbWeather2 = MelbClient()
         self.active = ActiveLocations()
         self.allLocations = LocationList()
-        self.wFrameCollection = WeatherFrameCollection()
+        self.monitorCollection = MonitorCollection()
         self.viewOption = None
 
 
@@ -42,16 +42,18 @@ class Controller:
 
         print("Update Complete.")
 
-        self.refreshWeatherFrames()
+        self.refreshMonitors()
 
-
-    def refreshWeatherFrames(self):
-        self.wFrameCollection.clearAllFrames()
+    """
+    Clears all monitors from window and re-adds them with the new information
+    """
+    def refreshMonitors(self):
+        self.monitorCollection.clearAllMonitors()
         # display new data to the weather frame
         for location in self.active.activeList:
-            wFrame = WeatherFrame(self.gui.frame, self.active, location.getName())
-            wFrame.addData(location, self.viewOption)
-            self.wFrameCollection.addFrame(wFrame)
+            monitor = Monitor(self.gui.frame, self.active, location.getName())
+            monitor.addData(location, self.viewOption)
+            self.monitorCollection.addMonitor(monitor)
 
 
     """
@@ -73,9 +75,9 @@ class Controller:
         self.active.add(location)
 
         # display data to weather frame
-        wFrame = WeatherFrame(self.gui.frame, self.active, locationName)
+        wFrame = Monitor(self.gui.frame, self.active, locationName)
         wFrame.addData(location, self.viewOption)
-        self.wFrameCollection.addFrame(wFrame)
+        self.monitorCollection.addMonitor(wFrame)
 
 
     """
@@ -83,7 +85,7 @@ class Controller:
     """
     def setViewingOption(self, option):
         self.viewOption = option
-        self.refreshWeatherFrames()
+        self.refreshMonitors()
 
 
     """
@@ -106,5 +108,9 @@ class Controller:
         self.gui.startLoop()
         newTimer.cancel()
 
-cont = Controller()
-cont.begin()
+
+"""
+create controller and start the program
+"""
+app = Controller()
+app.begin()

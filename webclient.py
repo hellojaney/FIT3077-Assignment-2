@@ -13,16 +13,8 @@ class WebClient:
         pass
 
     """
-    Retrieves data associated to a given location from MelbourneWeatherData.
+    Retrieves data associated to a given location from the web service.
     """
     def getWeatherData(self, location):
         pass
-
-
-    """
-    Retrieves data associated to a given location from MelbourneWeatherTimeLapse.
-    """
-    def getWeatherTimeLapse(self, location):
-        pass
-
 

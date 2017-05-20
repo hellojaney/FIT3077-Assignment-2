@@ -9,7 +9,7 @@ Dependencies:
 Python Version 2.7.13 or later
 pip (available with python)
 Tkinter (available with python)
-Suds-Jurko
+Suds-Jurko (pip install suds-jurko)
 
 Intructions:
 At terminal, run python "controller.py": python controller.py
