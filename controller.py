@@ -1,5 +1,5 @@
 from gui import GUI
-from clients import MelbClient
+from clientmelb import ClientMelb
 from location import Location
 from monitor import Monitor
 from activelocations import ActiveLocations
@@ -18,7 +18,7 @@ Controller manages the program functions including:
 class Controller:
     def __init__(self):
         self.gui = GUI("Weather Monitor")
-        self.melbWeather2 = MelbClient()
+        self.melbWeather2 = ClientMelb()
         self.active = ActiveLocations()
         self.allLocations = LocationList()
         self.monitorCollection = MonitorCollection()

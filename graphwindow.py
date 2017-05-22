@@ -1,4 +1,4 @@
-from clients import TimeLapseClient
+from clienttimelapse import TimeLapseClient
 
 from Tkinter import *
 from datetime import datetime
@@ -23,7 +23,7 @@ class GraphWindow:
     def __init__(self, locationName):
 
         self.locationName = locationName
-        self.client = TimeLapseClient()
+        self.client = ClientTimeLapse()
         self.job = None
 
         # create data lists
