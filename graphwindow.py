@@ -59,16 +59,19 @@ class GraphWindow:
         #self.axis.set_color_cycle(['blue', 'orange'])
         self.axis.set_prop_cycle('color', ['red', 'blue'])
         self.axis.legend(['Temperature', 'Rainfall'], loc='upper left')
-        self.setupLegend()
+        self.setLegendColours()
 
         self.axis.set_xlabel('Time (date hour:minute)')
         self.axis.set_ylabel('Temperature / Rainfall (C / mm)')
 
-
-    def setupLegend(self):
+    """
+    Fixes the colours for the legend (Temperature = red, Rainfall = blue)
+    """
+    def setLegendColours(self):
         legend = self.axis.get_legend()
         legend.legendHandles[0].set_color('red')
         legend.legendHandles[1].set_color('blue')
+
 
     """
     Packs the plot to the window (graphRoot)
@@ -83,11 +86,10 @@ class GraphWindow:
     When the window (graphRoot) is closed, the timer is stopped
     """
     def openGraph(self):
-        #self.timer.start()
+        # self.job calls the function self.updateData every 2 seconds (2000)
         self.job = self.graphRoot.after(2000, self.updateData)
         self.graphRoot.protocol("WM_DELETE_WINDOW", self.cancelUpdates)
         self.graphRoot.mainloop()
-        #self.timer.cancel()
 
     """
     Stops the update function when the user clicks the exit button on the window.

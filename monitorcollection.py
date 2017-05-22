@@ -7,16 +7,30 @@ class MonitorCollection:
         self.monitorList = []
 
     """
-    Add a frame to the Weather Frame Collection list given a new frame.
+    Add a frame to the Monitor Collection list given a new frame.
     """
-    def addMonitor(self, newFrame):
-        self.monitorList.append(newFrame)
+    def addMonitor(self, newMonitor):
+        self.monitorList.append(newMonitor)
 
 
     """
-    Closes frame from the window and remove all frames from the Weather Frame Collection.
+    Checks to see if a Monitor exists for a particular location
     """
-    def clearAllMonitors(self):
+    def exists(self, locationName, viewOption):
         for monitor in self.monitorList:
-            monitor.closeMonitor(monitor.frame)
-        self.monitorList = []
+            if monitor.location.getName() == locationName and monitor.viewOption == viewOption:
+                return True
+        return False
+
+
+    """
+    Remove monitor from list of active monitors
+    """
+    def remove(self, locationName):
+        index = 0
+        while index < len(self.monitorList):
+            if self.monitorList[index].getLocation().getName() == locationName:
+                del self.monitorList[index]
+                return
+            index += 1
+        print("Error: Couldn't delete location from active locations, location not found.")

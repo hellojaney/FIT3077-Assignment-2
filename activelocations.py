@@ -26,13 +26,3 @@ class ActiveLocations:
     """
     def add(self, newLocation):
         self.activeList.append(newLocation)
-
-
-    """
-    Check if the location is already active given a location name.
-    """
-    def exists(self, newLocation):
-        for location in self.activeList:
-            if location.getName() == newLocation:
-                return True
-        return False

@@ -1,10 +1,7 @@
 from gui import GUI
 from webclientmelb import WebClientMelb
-from location import Location
 from monitor import Monitor
-from activelocations import ActiveLocations
 from monitorcollection import MonitorCollection
-from controllertimer import ControllerTimer
 from locationlist import LocationList
 from dropdownlist import DropDownList
 from viewselection import ViewSelection
@@ -19,73 +16,32 @@ class Controller:
     def __init__(self):
         self.gui = GUI("Weather Monitor")
         self.melbWeather2 = WebClientMelb()
-        self.active = ActiveLocations()
         self.allLocations = LocationList()
         self.monitorCollection = MonitorCollection()
         self.viewOption = None
 
-
     """
-    Update location data and display on the screen through the Weather Frame.
+    Creates a text monitor given a location name
     """
-    def updateLocationInfo(self):
-        print("Updating Weather Data...")
-
-        # obtain new data through web client
-        for location in self.active.activeList:
-            tempData = self.melbWeather2.getWeatherData(location.getName())
-            #update timestamp first to correct values in temperatureHistory and rainfallHistory
-            location.setTimestamp(tempData[2])
-            location.setDatestamp(tempData[3])
-            location.setTemperature(tempData[0])
-            location.setRainfall(tempData[1])
-
-        print("Update Complete.")
-
-        self.refreshMonitors()
-
-    """
-    Clears all monitors from window and re-adds them with the new information
-    """
-    def refreshMonitors(self):
-        self.monitorCollection.clearAllMonitors()
-        # display new data to the weather frame
-        for location in self.active.activeList:
-            monitor = Monitor(self.gui.frame, self.active, location.getName())
-            monitor.addData(location, self.viewOption)
-            self.monitorCollection.addMonitor(monitor)
-
-
-    """
-    Obtains data of selected location information and displays to the Weather Frame.
-    """
-    def makeLocationActive(self, locationName):
+    def createMonitor(self, locationName):
         if self.viewOption == None:
             print("Select Viewing Option")
             return
 
         # check if location exists
-        if self.active.exists(locationName):
-            print(locationName + " is already active")
+        if self.monitorCollection.exists(locationName, self.viewOption):
+            print("Monitor looking at " + locationName + "'s " + self.viewOption + " is already active")
             return
 
-        # retrieve data from web client
-        locInfo = self.melbWeather2.getWeatherData(locationName)
-        location = Location(locationName, locInfo[0], locInfo[1], locInfo[2], locInfo[3])
-        self.active.add(location)
-
         # display data to weather frame
-        wFrame = Monitor(self.gui.frame, self.active, locationName)
-        wFrame.addData(location, self.viewOption)
-        self.monitorCollection.addMonitor(wFrame)
-
+        monitor = Monitor(self.gui.frame, self.monitorCollection, locationName, self.viewOption)
+        self.monitorCollection.addMonitor(monitor)
 
     """
     Sets the view option to either: temperature, rainfall or both.
     """
     def setViewingOption(self, option):
         self.viewOption = option
-        self.refreshMonitors()
 
 
     """
@@ -102,11 +58,7 @@ class Controller:
         # initialise view selection: location, rainfall or both
         ViewSelection(self.gui.canvas, self)
 
-        # initialise timer and start GUI
-        newTimer = ControllerTimer(300, self.updateLocationInfo)
-        newTimer.start()
         self.gui.startLoop()
-        newTimer.cancel()
 
 
 """

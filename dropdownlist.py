@@ -21,4 +21,4 @@ class DropDownList():
     def selectOption(self, option):
         if option == "--- Select a Location ---":
             return
-        self.caller.makeLocationActive(option)
+        self.caller.createMonitor(option)
