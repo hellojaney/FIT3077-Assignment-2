@@ -1,4 +1,5 @@
-from clienttimelapse import TimeLapseClient
+from webclienttimelapse import WebClientTimeLapse
+from webclienttimelapseadapter import WebClientTimelapseAdapter
 
 from Tkinter import *
 from datetime import datetime
@@ -7,8 +8,6 @@ import matplotlib
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
-
-
 
 """
 A Tkinter window which holds the rainfall and temperature graph that will be  
@@ -23,7 +22,8 @@ class GraphWindow:
     def __init__(self, locationName):
 
         self.locationName = locationName
-        self.client = ClientTimeLapse()
+        self.client = WebClientTimeLapse()
+        self.clientAdapater = WebClientTimelapseAdapter(self.client)
         self.job = None
 
         # create data lists
@@ -103,20 +103,14 @@ class GraphWindow:
     Retrieves new data from the TimeLapse Web Client and updates the temperature and rainfall data lists
     """
     def updateData(self):
-        newData = self.client.getWeatherData(self.locationName)
-        print newData
-        # convert Kelvin to Celsius, then add to temperature data
-        temperature = float(newData[0])
-        temperature -= 273.15
-        self.tempData.append(temperature)
+        weatherData = self.clientAdapater.getWeatherData(self.locationName)
 
-        # convert centimeters to millimeters asnd add to rainfall data
-        rainfall = float(newData[1])
-        rainfall = rainfall * 10
-        self.rainData.append(rainfall)
+        # add temperature and rainfall from weatherData and store in data lists
+        self.tempData.append(weatherData[0])
+        self.rainData.append(weatherData[1])
 
-        # add new time data
-        formattedTime = newData[2] + " " + newData[3]
+        # get date and time data and convert it to datetime format, then store in data list
+        formattedTime = weatherData[2] + " " + weatherData[3]
         formattedTime = datetime.strptime(formattedTime, '%d/%m/%Y %H:%M:%S')
         self.timeData.append(formattedTime)
 

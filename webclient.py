@@ -4,7 +4,8 @@ Add class description here (tbd right now)
 
 class WebClient:
     def __init__(self):
-        pass
+        # 'declare' the class variables
+        self.client = None
 
     """
     Retrieves a list of all location names.
@@ -13,8 +14,10 @@ class WebClient:
         pass
 
     """
-    Retrieves data associated to a given location from the web service.
+    Retrieves weather data associated to a given location from the web service.
     """
     def getWeatherData(self, location):
         pass
+
+
 
