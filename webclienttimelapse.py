@@ -15,6 +15,7 @@ class WebClientTimeLapse():
         weatherData = self.client.service.getWeather(location)
         temperature = weatherData[1]
         rainfall = weatherData[2]
+
         date, time = weatherData[0].split(' ')
 
         return temperature, rainfall, date, time

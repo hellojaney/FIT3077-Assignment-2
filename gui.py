@@ -9,7 +9,7 @@ class GUI:
     def __init__(self, title):
         # Configure Frame
         self.root = tk.Tk()
-        self.root.minsize(width = 300, height = 600)
+        self.root.minsize(width = 500, height = 600)
         self.root.title(title)
         self.canvas = tk.Canvas(self.root, borderwidth = 0, background = "#ffffff")
         self.frame = tk.Frame(self.canvas, background = "#ffffff")

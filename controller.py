@@ -30,7 +30,7 @@ class Controller:
 
         # check if location exists
         if self.monitorCollection.exists(locationName, self.viewOption):
-            print("Monitor looking at " + locationName + "'s " + self.viewOption + " is already active")
+            print("A monitor viewing " + locationName + "'s " + self.viewOption + " is already active")
             return
 
         # display data to weather frame

@@ -19,5 +19,15 @@ class WebClient:
     def getWeatherData(self, location):
         pass
 
+    """
+    Takes input and if its datatype is None, then it returns a "-" string. 
+    """
+    def formatNoneData(self, input):
+        if input is None:
+            return "-"
+        else:
+            return input
+
+
 
 

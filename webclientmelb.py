@@ -18,7 +18,7 @@ class WebClientMelb(WebClient):
         temperature = temperatureData[1]
 
         rainfallData = self.client.service.getRainfall(location)
-        rainfall = rainfallData[1]
+        rainfall = self.formatNoneData(rainfallData[1])
 
         date, time = rainfallData[0].split(' ')
 

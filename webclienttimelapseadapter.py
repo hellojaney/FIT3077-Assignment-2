@@ -22,6 +22,7 @@ class WebClientTimelapseAdapter(WebClient):
 
         # convert centimeters to millimeters
         rainfall = float(unconvertedWeatherData[1]) * 10
+        rainfall = self.formatNoneData(rainfall)
 
         # date and time remains the same
         date, time = unconvertedWeatherData[2], unconvertedWeatherData[3]
