@@ -1,65 +1,111 @@
 from gui import GUI
-from webclientmelb import WebClientMelb
-from monitor import Monitor
+from locationcollection import LocationCollection
 from monitorcollection import MonitorCollection
-from locationlist import LocationList
-from dropdownlist import DropDownList
-from viewselection import ViewSelection
+from webclientmelb import WebClientMelb
+from selector import Selector
+from applybutton import ApplyButton
 
 """
-Controller manages the program functions including:
-- tracking timer to refresh location data on screen
-- creating instances of GUI, WebClient, ActiveLocations, WeatherFrameCollection
+INSERT 
 """
-
 class Controller:
     def __init__(self):
         self.gui = GUI("Weather Monitor")
         self.melbWeather2 = WebClientMelb()
-        self.allLocations = LocationList()
-        self.monitorCollection = MonitorCollection()
-        self.viewOption = None
+        self.monitorCollection = MonitorCollection(self)
+        self.locationCollection = LocationCollection(self)
+
+        self.locationSelection = None
+        self.serviceSelection = None
+        self.viewSelection = None
+        self.dataSelection = None
 
     """
-    Creates a text monitor given a location name
+    
     """
-    def createMonitor(self, locationName):
-        if self.viewOption == None:
-            print("Select Viewing Option")
+    def createMonitor(self):
+        location = self.locationCollection.createLocation(self.locationSelection, self.serviceSelection, self.viewSelection, self.dataSelection)
+
+        if location is None:
+            print "A monitor for " + self.locationSelection + " using " + self.serviceSelection + " to view its " + self.dataSelection + " as a " + self.viewSelection +  " is already active."
             return
 
-        # check if location exists
-        if self.monitorCollection.exists(locationName, self.viewOption):
-            print("A monitor viewing " + locationName + "'s " + self.viewOption + " is already active")
-            return
+        if self.viewSelection == "Text":
+            self.monitorCollection.createTextMonitor(location, self.gui.frame)
 
-        # display data to weather frame
-        monitor = Monitor(self.gui.frame, self.monitorCollection, locationName, self.viewOption)
-        self.monitorCollection.addMonitor(monitor)
+        elif self.viewSelection == "Graph":
+            self.monitorCollection.createGraphMonitor(location)
 
-    """
-    Sets the view option to either: temperature, rainfall or both.
-    """
-    def setViewingOption(self, option):
-        self.viewOption = option
-
+        else:
+            print "Error Creating Monitor: selected data view (temperature/rainfall/both) was not found."
 
     """
-    Initialise Program
+    Sets the selector values when an option is selected from a selector list
+    """
+    def setSelectorValues(self, option, selectorType):
+        if selectorType == "Service":
+            self.serviceSelection = option
+        elif selectorType == "View":
+            self.viewSelection = option
+        elif selectorType == "Data":
+            self.dataSelection = option
+        elif selectorType == "Location":
+            self.locationSelection = option
+        else:
+            print "Selector Error: could not set selector value for " + str(selectorType)
+
+
+    """
+    Check that all other selector values have been set to something when location is selected, 
+        - returns True if all have been selected, false otherwise.
+    """
+    def allValuesSelected(self):
+        allSelected = True
+
+        if self.serviceSelection is None:
+            print "Selection Error: select which web service to use (1st list)"
+            allSelected = False
+
+        if self.viewSelection is None:
+            print "Selection Error: select how the data should be represented (2nd list)"
+            allSelected = False
+
+        if self.dataSelection is None:
+            print "Selection Error: select which data should represented (3rd list)"
+            allSelected = False
+
+        if self.locationSelection is None:
+            print "Selection Error: select which location to be viewed (4th list)"
+            allSelected = False
+
+        return allSelected
+
+
+    def applyOptions(self):
+        if self.allValuesSelected():
+            self.createMonitor()
+
+
+
+    """
+    Set up elements and start the GUI/program
     """
     def begin(self):
-        # initialising GUI and Web Client
-        locList = self.melbWeather2.getLocationNames()
+        # create lists of options for each drop down selector
+        serviceOptions = ["---- Select a Service ----", "MelbWeather2", "WeatherTimeLapse"]
+        locationOptions = ["---- Select a Location ----"] + self.melbWeather2.getLocationNames()
+        viewOptions = ["---- Select a View ----", "Text", "Graph"]
+        dataOptions = ["---- Select Data ----", "Temperature", "Rainfall", "Temperature and Rainfall"]
 
-        # passing list of locations and creating optionMenu
-        self.allLocations.addMulti(locList)
-        DropDownList(self.gui.canvas, self.allLocations.getAll(), self)
+        # set up the drop down selectors by creating their objects
+        Selector(self.gui.canvas, serviceOptions, self, "Service", 0)
+        Selector(self.gui.canvas, viewOptions, self, "View", 1)
+        Selector(self.gui.canvas, dataOptions, self, "Data", 2)
+        Selector(self.gui.canvas, locationOptions, self, "Location", 3)
+        ApplyButton(self.gui.canvas, self, 4)
 
-        # initialise view selection: location, rainfall or both
-        ViewSelection(self.gui.canvas, self)
-
+        #open the gui
         self.gui.startLoop()
-
 
 """
 create controller and start the program

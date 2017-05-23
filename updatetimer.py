@@ -5,7 +5,7 @@ Code derived from http://stackoverflow.com/questions/12435211/python-threading-t
 Timer class keeps track of time for refreshing the weather locations
 """
 
-class ControllerTimer():
+class UpdateTimer():
     def __init__(self, time, action):
         self.time = time
         self.action = action
@@ -17,7 +17,7 @@ class ControllerTimer():
     """
     def handler(self):
         self.action()
-        self.thread = Timer(self.time, self.handler)
+        self.thread = UpdateTimer(self.time, self.handler)
         self.thread.start()
 
 
