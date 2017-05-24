@@ -10,7 +10,7 @@ Python Version 2.7.13 or later
 pip (available with python)
 Tkinter (available with python)
 Suds-Jurko (pip install suds-jurko)
-Mat.lib (pip install mat.lib)
+Mat.lib (pip install matplotlib)
 
 Intructions:
 At terminal, run python "controller.py": python controller.py
