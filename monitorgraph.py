@@ -27,9 +27,9 @@ class MonitorGraph(Monitor):
 
         # set up window and main plot
         self.graphRoot = Tk()
-        self.graphRoot.title('Rainfall and Temperature Graph for ' + self.location.getName())
+        self.graphRoot.title('Weather Information Graph for ' + self.location.getName())
         self.fig = Figure(figsize=(5, 5), dpi=100)
-        self.fig.suptitle('Rainfall and Temperature Graph for ' + self.location.getName())
+        self.fig.suptitle('Weather Information Graph for ' + self.location.getName())
 
         # create axis
         self.axis = self.fig.add_subplot(111)

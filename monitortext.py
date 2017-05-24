@@ -52,7 +52,7 @@ class MonitorText(Monitor):
         self.datetimestampLabel = Label(self.frame, text="Updated at: " + self.location.getDateStamp() + ", " + self.location.getTimeStamp(),
                                         font="Helvetica 14")
         self.datetimestampLabel.grid(row=3, column=0, sticky=W)
-        print (self.location.dataType)
+
         if self.location.viewType != "Rainfall":
             self.temperatureLabel = Label(self.frame, text="Temperature: " + str(self.location.getTemperature()) + "C", font="Helvetica 14")
             self.temperatureLabel.grid(row=4, column=0, sticky=W)
