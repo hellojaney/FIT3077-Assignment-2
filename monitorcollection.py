@@ -11,7 +11,6 @@ class MonitorCollection(Collection):
     def __init__(self, caller):
         Collection.__init__(self, caller)
 
-
     """
     Creates a text monitor and stores it in the collection
     """
@@ -26,37 +25,40 @@ class MonitorCollection(Collection):
     def createGraphMonitor(self, location):
         monitor = MonitorGraph(location, self)
         self.add(monitor)
+        monitor.openGraph()
 
 
-    """
-    Checks to see if a Monitor exists by checking the details of the location that it holds
-    """
-    def exists(self, locationName, serviceType, viewType, dataType):
-        for monitor in self.collectionList:
-            if monitor.location.name == locationName and monitor.location.serviceType == serviceType and monitor.location.viewType == viewType and monitor.location.dataType == dataType:
+    def exists(self, mon):
+        monitorLocation = mon.getLocation()
+        n = monitorLocation.name
+        s = monitorLocation.serviceType
+        v = monitorLocation.viewType
+        d = monitorLocation.dataType
+
+        for mon in self.collectionList:
+            monLocation = mon.getLocation()
+            if monLocation.name == n and monLocation.serviceType == s and monLocation.viewType == v and monLocation.dataType == d:
                 return True
         return False
 
 
-    """
-    Remove monitor from list of active monitors
-    """
-    def remove(self, locationName, serviceType, viewType, dataType):
-        index = 0
-        for monitor in self.collectionList:
-            if monitor.location.name == locationName and monitor.location.serviceType == serviceType and monitor.location.viewType == viewType and monitor.location.dataType == dataType:
-                monitor.location.stopTimer()
-                index  = self.collectionList.index(monitor)
-                del self.collectionList[index]
-                return
-            index += 1
-        print("Error: Couldn't delete from active monitors, monitor not found.")
-        print "monitor removed."
+    def removeFromCollection(self, monitor):
+        if self.exists(monitor):
+            self.collectionList.remove(monitor)
+        else:
+            print("Error: Couldn't delete monitor for " + monitor.location.name + ", was not found.")
+
 
     """
-        Removes all monitors and all (attached) locations
-        """
-
+    Removes all monitors and all (attached) locations
+    """
     def removeAll(self):
+        temporaryList = []
         for monitor in self.collectionList:
+            temporaryList.append(monitor)
+
+        for monitor in temporaryList:
             monitor.remove()
+
+        if len(self.collectionList) != 0:
+            print "Did not shut down all monitors"

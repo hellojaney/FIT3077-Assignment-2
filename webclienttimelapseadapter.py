@@ -20,9 +20,11 @@ class WebClientTimelapseAdapter(WebClient):
         # convert Kelvin to Celsius
         temperature = float(unconvertedWeatherData[0]) - 273.15
 
-        # convert centimeters to millimeters
-        rainfall = float(unconvertedWeatherData[1]) * 10
+        # convert centimeters to millimeters, but check that the information is valid first
+        rainfall = unconvertedWeatherData[1]
         rainfall = self.formatNoneData(rainfall)
+        if rainfall != "-":
+            rainfall = float(unconvertedWeatherData[1]) * 10
 
         # date and time remains the same
         date, time = unconvertedWeatherData[2], unconvertedWeatherData[3]

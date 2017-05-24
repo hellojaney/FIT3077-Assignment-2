@@ -6,8 +6,8 @@ class Collection:
     def add(self, item):
         self.collectionList.append(item)
 
-    def exists(self):
+    def exists(self, item):
         pass
 
-    def remove(self):
+    def removeFromCollection(self, item):
         pass

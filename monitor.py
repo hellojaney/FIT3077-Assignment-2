@@ -23,7 +23,15 @@ class Monitor(Observer):
     Removes the location and the monitor from their collections
     """
     def remove(self):
+        #stop the timer
         self.location.stopTimer()
-        self.location.remove()
-        self.caller.remove(self.location.name, self.location.serviceType, self.location.viewType,self.location.dataType)
+
+        #remove the location from its collection
+        self.location.removeLocation()
+
+        #remove the monitor from its collection
+        self.caller.removeFromCollection(self)
+
+    def getLocation(self):
+        return self.location
 

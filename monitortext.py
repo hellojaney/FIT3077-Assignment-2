@@ -42,18 +42,20 @@ class MonitorText(Monitor):
         Label(self.frame, text = self.location.getName(), font ="Helvetica 16 bold").grid(row=1, column=0, sticky = W)
 
         self.closeButton = Button(self.frame, text="x", command=lambda: self.closeMonitor(self.frame))
-        self.closeButton.grid(row = 1, column = 5)
+        self.closeButton.grid(row=1, column=5)
+
+        Label(self.frame, text = "Viewing " + self.location.dataType + " from " + self.location.serviceType, font="Helvetic 14 italic").grid(row=2, column=0, sticky = W)
 
         self.datetimestampLabel = Label(self.frame, text="Updated at: " + self.location.getDateStamp() + ", " + self.location.getTimeStamp(),
                                         font="Helvetica 14")
-        self.datetimestampLabel.grid(row=2, column=0, sticky=W)
-
+        self.datetimestampLabel.grid(row=3, column=0, sticky=W)
+        print (self.location.dataType)
         if self.location.viewType != "Rainfall":
             self.temperatureLabel = Label(self.frame, text="Temperature: " + str(self.location.getTemperature()) + "C", font="Helvetica 14")
-            self.temperatureLabel.grid(row=3, column=0, sticky=W)
-        if self.location.viewType != "Temperature":
+            self.temperatureLabel.grid(row=4, column=0, sticky=W)
+        if self.location.dataType != "Temperature":
             self.rainfallLabel = Label(self.frame, text="Rainfall: " + str(self.location.getRainfall()) + "mm", font="Helvetica 14")
-            self.rainfallLabel.grid(row=4, column=0, sticky=W)
+            self.rainfallLabel.grid(row=5, column=0, sticky=W)
 
 
     """
@@ -62,10 +64,10 @@ class MonitorText(Monitor):
     def refreshMonitorData(self):
         self.datetimestampLabel.config(
             text="Updated at: " + str(self.location.timestamp) + ", " + str(self.datestamp))
-        if self.location.viewType != "Rainfall":
+        if self.location.dataType != "Rainfall":
             self.temperatureLabel.config(text="Temperature: " + str(self.temperature) + "C")
 
-        if self.location.viewType != "Temperature":
+        if self.location.dataType != "Temperature":
             self.rainfallLabel.config(text="Rainfall: " + str(self.rainfall) + "mm")
 
 
@@ -74,6 +76,5 @@ class MonitorText(Monitor):
     """
     def closeMonitor(self, frame):
         self.remove()
-        self.location.remove()
         frame.pack_forget()
         frame.destroy()

@@ -17,34 +17,20 @@ class LocationCollection(Collection):
         else:
             return None
 
-
-    """
-    Checks to see if a Location exists for a particular location
-    Looks at the location name, what it is viewing (temp/rain/both) and its service type (kind of web client)
-    """
     def exists(self, location):
-        l = location.name
+        n = location.name
         s = location.serviceType
         v = location.viewType
         d = location.dataType
 
         for loc in self.collectionList:
-            if loc.name == l and loc.serviceType == s and loc.viewType == v and loc.dataType == d:
+            if loc.name == n and loc.serviceType == s and loc.viewType == v and loc.dataType == d:
                 return True
         return False
 
 
-    """
-    Remove location from list of active locations
-    Looks at the location name, what it is viewing (temp/rain/both) and its service type (kind of web client)
-    """
-    def remove(self, locationName, serviceType, viewType, dataType):
-        index = 0
-        for location in self.collectionList:
-            if location.name == locationName and location.serviceType == serviceType and location.viewType == viewType and location.dataType == dataType:
-                location.stopTimer()
-                index  = self.collectionList.index(location)
-                del self.collectionList[index]
-                return
-            index += 1
-        print("Error: Couldn't delete from active monitors, monitor not found.")
+    def removeFromCollection(self, location):
+        if self.exists(location):
+            self.collectionList.remove(location)
+        else:
+            print("Error: Couldn't delete " + location.name +", was not found.")

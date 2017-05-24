@@ -82,8 +82,8 @@ class Location(Subject):
     """
     Removes the location object from the location collection when a monitor is shut down
     """
-    def remove(self):
-        self.caller.remove(self.name, self.serviceType, self.viewType, self.dataType)
+    def removeLocation(self):
+        self.caller.removeFromCollection(self)
 
     """
     Stops the timer by calling cancel()

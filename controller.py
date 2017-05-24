@@ -112,6 +112,7 @@ class Controller:
     When the main GUI is shut down, all of the monitors are closed and (attached) locations are deleted
     """
     def shutDown(self):
+        print "Shutting down all monitors"
         self.monitorCollection.removeAll()
         sys.exit(0)
 

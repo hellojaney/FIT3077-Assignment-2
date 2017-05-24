@@ -25,6 +25,8 @@ class WebClient:
     def formatNoneData(self, input):
         if input is None:
             return "-"
+        elif input == 'Trace':
+            return "-"
         else:
             return input
 
