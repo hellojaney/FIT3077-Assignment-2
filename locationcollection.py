@@ -1,9 +1,13 @@
 from collection import Collection
 from location import Location
 
+"""
+Location Collection holds all instances of Location
+"""
+
 class LocationCollection(Collection):
-    def __init__(self, caller):
-        Collection.__init__(self, caller)
+    def __init__(self):
+        Collection.__init__(self)
 
 
     """
@@ -17,6 +21,9 @@ class LocationCollection(Collection):
         else:
             return None
 
+    """
+    Checks whether a specific location object already exists
+    """
     def exists(self, location):
         n = location.name
         s = location.serviceType
@@ -28,7 +35,9 @@ class LocationCollection(Collection):
                 return True
         return False
 
-
+    """
+    Removes a location object from the collection
+    """
     def removeFromCollection(self, location):
         if self.exists(location):
             self.collectionList.remove(location)

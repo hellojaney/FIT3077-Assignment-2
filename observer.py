@@ -1,5 +1,5 @@
 """
-The Observer abstract class
+Observer Abstract Class
 """
 
 class Observer:

@@ -4,7 +4,7 @@ from location import Location
 from monitor import Monitor
 
 """
-Creates a Frame() for the GUI
+Creates a Frame for the GUI
 Takes a list of information from getAllInfo: location, timestamp, rainfall and temp
 Packs the frame into the GUI
 """
@@ -23,6 +23,9 @@ class MonitorText(Monitor):
 
         self.packData()
 
+    """
+    Update the location information onto the screen
+    """
     def update(self, temperature, rainfall, datestamp, timestamp):
         self.temperature = temperature
         self.rainfall = rainfall

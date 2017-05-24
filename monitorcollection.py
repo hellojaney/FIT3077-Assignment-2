@@ -4,12 +4,12 @@ from monitortext import MonitorText
 from monitorgraph import MonitorGraph
 
 """
-Holds a list of all WeatherFrame instances.
+Monitor Collection holds all instances of individual monitors for each Location
 """
 
 class MonitorCollection(Collection):
-    def __init__(self, caller):
-        Collection.__init__(self, caller)
+    def __init__(self):
+        Collection.__init__(self)
 
     """
     Creates a text monitor and stores it in the collection
@@ -27,7 +27,9 @@ class MonitorCollection(Collection):
         self.add(monitor)
         monitor.openGraph()
 
-
+    """
+    Checks to see if the monitor exists for the location
+    """
     def exists(self, mon):
         monitorLocation = mon.getLocation()
         n = monitorLocation.name
@@ -41,7 +43,9 @@ class MonitorCollection(Collection):
                 return True
         return False
 
-
+    """
+    Removes specific monitor from the Monitor Collection
+    """
     def removeFromCollection(self, monitor):
         if self.exists(monitor):
             self.collectionList.remove(monitor)
@@ -50,7 +54,7 @@ class MonitorCollection(Collection):
 
 
     """
-    Removes all monitors and all (attached) locations
+    Removes all monitors and all locations from the Monitor Collection
     """
     def removeAll(self):
         temporaryList = []

@@ -1,5 +1,9 @@
 from observer import Observer
 
+"""
+Monitor Class holds the data from location for each monitor
+"""
+
 class Monitor(Observer):
 
     def __init__(self, location, caller):
@@ -32,6 +36,9 @@ class Monitor(Observer):
         #remove the monitor from its collection
         self.caller.removeFromCollection(self)
 
+    """
+    Returns the location of the monitor
+    """
     def getLocation(self):
         return self.location
 

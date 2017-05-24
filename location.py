@@ -7,9 +7,10 @@ from temperature import Temperature
 from rainfall import Rainfall
 
 """
-Takes in the location name, temperature, rainfall and timestamp.
-Creates and holds a temperature and rainfall instance.
-Keeps location name, timestamp and datestamp as an attribute.
+Location Class holds information relevant to the location.
+    Takes in the location name, temperature, rainfall and timestamp obtained from the Web Client.
+    Creates and holds a temperature and rainfall instance.
+    Keeps location name, timestamp and datestamp as an attribute.
 """
 
 class Location(Subject):
@@ -69,7 +70,7 @@ class Location(Subject):
 
 
     """
-    Updates data from WebClient
+    Updates data of the location's attributes from the WebClient
     """
     def updateData(self):
         locInfo = self.client.getWeatherData(self.name)

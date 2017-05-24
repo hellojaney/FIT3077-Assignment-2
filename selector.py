@@ -1,6 +1,7 @@
 import Tkinter as tk
+
 """
-LocationSelector class holds and displays the location options that the user selects to view.
+Selector Class holds and displays the location options that the user selects to view.
 """
 
 class Selector:

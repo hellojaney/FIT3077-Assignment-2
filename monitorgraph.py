@@ -20,8 +20,6 @@ class MonitorGraph(Monitor):
     def __init__(self, location, caller):
         Monitor.__init__(self, location, caller)
 
-        self.locationName = location.getName()
-
         # create data lists
         self.rainData = []
         self.tempData = []
@@ -29,8 +27,9 @@ class MonitorGraph(Monitor):
 
         # set up window and main plot
         self.graphRoot = Tk()
-        self.graphRoot.title('Rainfall and Temperature Graph for ' + self.locationName)
+        self.graphRoot.title('Rainfall and Temperature Graph for ' + self.location.getName())
         self.fig = Figure(figsize=(5, 5), dpi=100)
+        self.fig.suptitle('Rainfall and Temperature Graph for ' + self.location.getName())
 
         # create axis
         self.axis = self.fig.add_subplot(111)
@@ -46,28 +45,45 @@ class MonitorGraph(Monitor):
         self.formatAxis()
         self.showCanvas()
 
-        self.openGraph()
-
     """
     Adds the legend, x axis and y axis to the plot
     Restricts the line colours to orange and bluegr
     """
     def formatAxis(self):
-        #self.axis.set_color_cycle(['blue', 'orange'])
-        self.axis.set_prop_cycle('color', ['red', 'blue'])
-        self.axis.legend(['Temperature', 'Rainfall'], loc='upper left')
+        legendItems = []
+        colourItems = []
+        if self.location.dataType != 'Rainfall':
+            legendItems.append('Temperature')
+            colourItems.append('red')
+
+        if self.location.dataType != 'Temperature':
+            legendItems.append('Rainfall')
+            colourItems.append('blue')
+
+        self.axis.set_prop_cycle('color', colourItems)
+        self.axis.legend(legendItems, loc='upper left')
         self.setLegendColours()
 
         self.axis.set_xlabel('Time (date hour:minute)')
-        self.axis.set_ylabel('Temperature / Rainfall (C / mm)')
+        if self.location.dataType == 'Temperature':
+            self.axis.set_ylabel('Temperature (C)')
+        elif self.location.dataType == 'Rainfall':
+            self.axis.set_ylabel('Rainfall (mm)')
+        else:
+            self.axis.set_ylabel('Temperature / Rainfall (C / mm)')
 
     """
     Fixes the colours for the legend (Temperature = red, Rainfall = blue)
     """
     def setLegendColours(self):
         legend = self.axis.get_legend()
-        legend.legendHandles[0].set_color('red')
-        legend.legendHandles[1].set_color('blue')
+        if self.location.dataType == 'Temperature':
+            legend.legendHandles[0].set_color('red')
+        elif self.location.dataType == 'Rainfall':
+            legend.legendHandles[0].set_color('blue')
+        else:
+            legend.legendHandles[0].set_color('red')
+            legend.legendHandles[1].set_color('blue')
 
 
     """
@@ -88,16 +104,12 @@ class MonitorGraph(Monitor):
 
 
     """
-    Stops the update function when the user clicks the exit button on the window.
-    Then deletes the monitor and location from their respective collections
+    Calls the remove function for the monitor (which deletes the monitor and the associated location from their collection.
+    Then destroys (closes) the window.
     """
     def shutDownMonitor(self):
-        #cancel the timer here
-
         self.remove()
         self.graphRoot.destroy()
-        print "test"
-
 
     """
     Retrieves new data from the TimeLapse Web Client and updates the temperature and rainfall data lists
@@ -126,11 +138,10 @@ class MonitorGraph(Monitor):
     Removes both temperature and rainfall lines from the graph
     """
     def clearGraph(self):
-        if len(self.tempLine) != 0:
+        if self.location.dataType != 'Rainfall':
             l = self.tempLine.pop(0)
             l.remove()
-
-        if len(self.rainLine) != 0:
+        if self.location.dataType != 'Temperature':
             l = self.rainLine.pop(0)
             l.remove()
 
@@ -140,6 +151,8 @@ class MonitorGraph(Monitor):
     """
     def plotLines(self):
         # update lines with new data
-        self.tempLine = self.axis.plot(self.timeData, self.tempData)
-        self.rainLine = self.axis.plot(self.timeData, self.rainData)
+        if self.location.dataType != 'Rainfall':
+            self.tempLine = self.axis.plot(self.timeData, self.tempData)
+        if self.location.dataType != 'Temperature':
+            self.rainLine = self.axis.plot(self.timeData, self.rainData)
         self.canvas.show()

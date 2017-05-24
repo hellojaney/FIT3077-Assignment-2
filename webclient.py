@@ -1,5 +1,5 @@
 """
-Add class description here (tbd right now)
+WebClient is an abstract class for different types of WebClient associations.
 """
 
 class WebClient:

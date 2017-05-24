@@ -23,12 +23,14 @@ class GUI:
 
         self.frame.bind("<Configure>", self.onFrameConfigure)
 
-
+    """
+    Configuring the scrollbar.
+    """
     def onFrameConfigure(self, event):
         self.canvas.configure(scrollregion = self.canvas.bbox("all"))
 
     """
-    Initialising the GUI start loop
+    Initialising the GUI start loop.
     """
     def startLoop(self):
         self.root.mainloop()

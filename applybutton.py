@@ -1,5 +1,9 @@
 from Tkinter import *
 
+"""
+The apply button applies the selected option in the dropdown boxes.
+"""
+
 class ApplyButton:
     def __init__(self, guiFrame, caller, column):
         self.caller = caller

@@ -7,14 +7,16 @@ from applybutton import ApplyButton
 import sys
 
 """
-INSERT 
+The Controller class opens the GUI and provides the drop down lists for the user to choose what kind of 
+ monitor to open. It takes the user input and calls the methods to create the monitors.
+ It is responsible for creating instances of the Web Client, Monitor Collection and Location Collection.
 """
 class Controller:
     def __init__(self):
         self.gui = GUI("Weather Monitor")
         self.melbWeather2 = WebClientMelb()
-        self.monitorCollection = MonitorCollection(self)
-        self.locationCollection = LocationCollection(self)
+        self.monitorCollection = MonitorCollection()
+        self.locationCollection = LocationCollection()
 
         self.locationSelection = None
         self.serviceSelection = None
@@ -23,7 +25,7 @@ class Controller:
 
 
     """
-        
+    Calls the methods from their respective collection class to create the monitor.
     """
     def createMonitor(self):
         location = self.locationCollection.createLocation(self.locationSelection, self.serviceSelection, self.viewSelection, self.dataSelection)
@@ -41,8 +43,9 @@ class Controller:
         else:
             print "Error Creating Monitor: selected data view (temperature/rainfall/both) was not found."
 
+
     """
-    Sets the selector values when an option is selected from a selector list
+    Sets the values for the selected option from the given list. 
     """
     def setSelectorValues(self, option, selectorType):
         if selectorType == "Service":
@@ -58,7 +61,7 @@ class Controller:
 
 
     """
-    Check that all other selector values have been set to something when location is selected, 
+    Check that all other selector values are not Null when location is selected, 
         - returns True if all have been selected, false otherwise.
     """
     def allValuesSelected(self):
@@ -83,12 +86,15 @@ class Controller:
         return allSelected
 
 
+    """
+    Create monitor when all values are selected.
+    """
     def applyOptions(self):
         if self.allValuesSelected():
             self.createMonitor()
 
     """
-    Set up elements and start the GUI/program
+    Set up drop down list elements and start the GUI/program.
     """
     def begin(self):
         # create lists of options for each drop down selector
@@ -109,15 +115,16 @@ class Controller:
         self.gui.startLoop()
 
     """
-    When the main GUI is shut down, all of the monitors are closed and (attached) locations are deleted
+    Removes all of the monitors are closed and (attached) locations are deleted when GUI is closed
     """
     def shutDown(self):
         print "Shutting down all monitors"
         self.monitorCollection.removeAll()
         sys.exit(0)
 
+
 """
-create controller and start the program
+Create controller and start the program
 """
 app = Controller()
 app.begin()
