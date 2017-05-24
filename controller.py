@@ -21,8 +21,9 @@ class Controller:
         self.viewSelection = None
         self.dataSelection = None
 
+
     """
-    
+        
     """
     def createMonitor(self):
         location = self.locationCollection.createLocation(self.locationSelection, self.serviceSelection, self.viewSelection, self.dataSelection)
@@ -86,8 +87,6 @@ class Controller:
         if self.allValuesSelected():
             self.createMonitor()
 
-
-
     """
     Set up elements and start the GUI/program
     """
@@ -106,11 +105,18 @@ class Controller:
         ApplyButton(self.gui.canvas, self, 4)
 
         #open the gui
+        self.gui.root.protocol("WM_DELETE_WINDOW", self.shutDown)
         self.gui.startLoop()
+
+    """
+    When the main GUI is shut down, all of the monitors are closed and (attached) locations are deleted
+    """
+    def shutDown(self):
+        self.monitorCollection.removeAll()
+        sys.exit(0)
 
 """
 create controller and start the program
 """
 app = Controller()
 app.begin()
-sys.exit(0)

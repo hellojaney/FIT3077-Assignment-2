@@ -52,3 +52,11 @@ class MonitorCollection(Collection):
             index += 1
         print("Error: Couldn't delete from active monitors, monitor not found.")
         print "monitor removed."
+
+    """
+        Removes all monitors and all (attached) locations
+        """
+
+    def removeAll(self):
+        for monitor in self.collectionList:
+            monitor.remove()

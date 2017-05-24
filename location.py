@@ -3,6 +3,8 @@ from updatetimer import UpdateTimer
 from webclientmelb import WebClientMelb
 from webclienttimelapseadapter import WebClientTimelapseAdapter
 from webclienttimelapse import WebClientTimeLapse
+from temperature import Temperature
+from rainfall import Rainfall
 
 """
 Takes in the location name, temperature, rainfall and timestamp.
@@ -17,8 +19,8 @@ class Location(Subject):
         self.observers = []
         self.name = name
         self.caller = caller
-        self.temperature = None
-        self.rainfall = None
+        self.temperature = Temperature(None)
+        self.rainfall = Rainfall(None)
         self.timestamp = None
         self.datestamp = None
 
@@ -41,7 +43,7 @@ class Location(Subject):
 
     def notifyObservers(self):
         for observer in self.observers:
-            observer.update(self.temperature, self.rainfall, self.datestamp, self.timestamp)
+            observer.update(self.temperature.getTemperature(), self.rainfall.getAmount(), self.datestamp, self.timestamp)
 
 
     def setupClient(self):
@@ -77,7 +79,9 @@ class Location(Subject):
         self.setTimestamp(locInfo[3])
         self.notifyObservers()
 
-
+    """
+    Removes the location object from the location collection when a monitor is shut down
+    """
     def remove(self):
         self.caller.remove(self.name, self.serviceType, self.viewType, self.dataType)
 
@@ -94,10 +98,10 @@ class Location(Subject):
         return self.name
 
     def getTemperature(self):
-        return self.temperature
+        return self.temperature.getTemperature()
 
     def getRainfall(self):
-        return self.rainfall
+        return self.rainfall.getAmount()
 
     def getTimeStamp(self):
         return self.timestamp
@@ -110,10 +114,10 @@ class Location(Subject):
     Setters
     """
     def setTemperature(self, newTemperature):
-        self.temperature = newTemperature
+        self.temperature.setTemperature(newTemperature)
 
     def setRainfall(self, newAmount):
-        self.rainfall = newAmount
+        self.rainfall.setAmount(newAmount)
 
     def setTimestamp(self, newTimestamp):
         self.timestamp = newTimestamp

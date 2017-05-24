@@ -20,9 +20,10 @@ class Monitor(Observer):
 
     """
     Stop the timer in the associated location so that no more updates from the webclient are made
-    Removes the location and the monitor from their collectons
+    Removes the location and the monitor from their collections
     """
     def remove(self):
         self.location.stopTimer()
         self.location.remove()
         self.caller.remove(self.location.name, self.location.serviceType, self.location.viewType,self.location.dataType)
+
