@@ -1,8 +1,10 @@
 from webclient import WebClient
 
 """
-FILL THIS OUT YOU FUCKWIT
-
+This adapter class makes the MelbourneWeatherTimelapse web client compatible with the WebClient abstract class.
+It uses the web client's unique functions to update data.
+For rainfall data, centimetres is converted to millimeters (program standard)
+For temperature data, Kelvin is converted to Celsius (program standard)
 """
 class WebClientTimelapseAdapter(WebClient):
     def __init__(self, timelapseClient):
