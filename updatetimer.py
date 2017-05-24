@@ -17,7 +17,7 @@ class UpdateTimer():
     """
     def handler(self):
         self.action()
-        self.thread = UpdateTimer(self.time, self.handler)
+        self.thread = Timer(self.time, self.handler)
         self.thread.start()
 
 

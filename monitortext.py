@@ -32,9 +32,6 @@ class MonitorText(Monitor):
         self.refreshMonitorData()
 
 
-    def remove(self):
-        self.caller.remove(self.location.name, self.location.serviceType, self.location.viewType, self.location.dataType)
-
     """
     Packs data into the frame, this includes the text and the buttons
     """

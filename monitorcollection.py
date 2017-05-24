@@ -51,3 +51,4 @@ class MonitorCollection(Collection):
                 return
             index += 1
         print("Error: Couldn't delete from active monitors, monitor not found.")
+        print "monitor removed."

@@ -45,6 +45,7 @@ class MonitorGraph(Monitor):
 
         self.formatAxis()
         self.showCanvas()
+
         self.openGraph()
 
     """
@@ -82,15 +83,20 @@ class MonitorGraph(Monitor):
     When the window (graphRoot) is closed, the timer is stopped
     """
     def openGraph(self):
+        self.graphRoot.protocol("WM_DELETE_WINDOW", self.shutDownMonitor)
         self.graphRoot.mainloop()
+
 
     """
     Stops the update function when the user clicks the exit button on the window.
-    WILL MOST LIKELY HAVE TO DELETE THIS
+    Then deletes the monitor and location from their respective collections
     """
-    def cancelUpdates(self):
-        pass
+    def shutDownMonitor(self):
+        #cancel the timer here
 
+        self.remove()
+        self.graphRoot.destroy()
+        print "test"
 
 
     """
@@ -103,7 +109,7 @@ class MonitorGraph(Monitor):
         self.datestamp = datestamp
         self.timestamp = timestamp
 
-        # update the data list for the graph
+        # update the temperature and rainfall data lists for the graph
         self.tempData.append(self.temperature)
         self.rainData.append(self.rainfall)
 
@@ -112,6 +118,7 @@ class MonitorGraph(Monitor):
         formattedTime = datetime.strptime(formattedTime, '%d/%m/%Y %H:%M:%S')
         self.timeData.append(formattedTime)
 
+        # clear the graph and plot the lines with the new data
         self.clearGraph()
         self.plotLines()
 
@@ -119,10 +126,14 @@ class MonitorGraph(Monitor):
     Removes both temperature and rainfall lines from the graph
     """
     def clearGraph(self):
-        l = self.tempLine.pop(0)
-        l.remove()
-        l = self.rainLine.pop(0)
-        l.remove()
+        if len(self.tempLine) != 0:
+            l = self.tempLine.pop(0)
+            l.remove()
+
+        if len(self.rainLine) != 0:
+            l = self.rainLine.pop(0)
+            l.remove()
+
 
     """
     Adds temperature and rainfall lines to the graph

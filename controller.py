@@ -4,6 +4,7 @@ from monitorcollection import MonitorCollection
 from webclientmelb import WebClientMelb
 from selector import Selector
 from applybutton import ApplyButton
+import sys
 
 """
 INSERT 
@@ -112,3 +113,4 @@ create controller and start the program
 """
 app = Controller()
 app.begin()
+sys.exit(0)
